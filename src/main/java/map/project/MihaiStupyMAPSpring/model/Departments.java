@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 
 
 
+
 public class Departments {
 
 
