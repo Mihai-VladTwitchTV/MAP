@@ -11,7 +11,7 @@ public class PartTimeEmployee extends Employee implements parttime {
     public PartTimeEmployee() {
     }
 
-    public PartTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, Department department) {
+    public PartTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAdress, Department department) {
         super(employeeID, firstName, lastName, phoneNumber, emailAdress, department);
     }
 }

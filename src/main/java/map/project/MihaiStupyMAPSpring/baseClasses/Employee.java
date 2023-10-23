@@ -14,7 +14,7 @@ public class Employee {
 
     }///empty constructor used for database work
 
-    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, Department department) {
+    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAdress, Department department) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +48,7 @@ public class Employee {
     @Setter
     @Getter
     @Column(name = "emailAdress")
-    private int emailAdress;
+    private String emailAdress;
 
     @Setter
     @ManyToOne
