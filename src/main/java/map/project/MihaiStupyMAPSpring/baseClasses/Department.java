@@ -16,7 +16,9 @@ public class Department {
     private int maxEmployees;
     @Column(name = "specialization")
     private String specialization;
-    @Column(name = "leader")
+
+    @OneToOne
+    @JoinColumn(name = "leaderID")
     private DepartmentLeader leader;
 
 }
