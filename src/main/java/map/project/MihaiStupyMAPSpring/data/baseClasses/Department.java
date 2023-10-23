@@ -1,4 +1,4 @@
-package map.project.MihaiStupyMAPSpring.baseClasses;
+package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 import jakarta.persistence.*;
 import lombok.Data;
