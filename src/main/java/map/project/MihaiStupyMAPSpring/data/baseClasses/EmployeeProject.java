@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "EmployeeProject")
-@IdClass(EmployeeProjectId.class)
+@IdClass(EmployeeProjectId.class)///aici e diferita implementarea fata de celalalt ManyToMany(EmployeeSkill), ar trebui sa alegem una numa sa nu pierdem puncte la consistenta
 public class EmployeeProject {
     @Id
     @ManyToOne
