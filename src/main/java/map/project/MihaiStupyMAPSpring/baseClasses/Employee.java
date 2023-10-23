@@ -10,6 +10,19 @@ import lombok.Setter;
 @Entity
 @Table(name = "Employee")
 public class Employee {
+    public Employee() {
+
+    }///empty constructor used for database work
+
+    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, Department department) {
+        this.employeeID = employeeID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAdress = emailAdress;
+        this.department = department;
+    }///detailed constructor used for initialization
+
     @Setter
     @Getter
     @Id

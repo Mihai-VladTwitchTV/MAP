@@ -1,8 +1,17 @@
 package map.project.MihaiStupyMAPSpring.baseClasses;
 
-public class PartTimeEmployee extends Employee implements parttime {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
 
-    public PartTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, int departmentID) {
-        super(employeeID, firstName, lastName, phoneNumber, emailAdress, departmentID);
+@Data
+@Entity
+@Table(name = "PartTimeEmployee")
+public class PartTimeEmployee extends Employee implements parttime {
+    public PartTimeEmployee() {
+    }
+
+    public PartTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, Department department) {
+        super(employeeID, firstName, lastName, phoneNumber, emailAdress, department);
     }
 }
