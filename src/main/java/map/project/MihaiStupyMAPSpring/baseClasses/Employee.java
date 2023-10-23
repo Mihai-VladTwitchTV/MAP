@@ -1,12 +1,16 @@
 package map.project.MihaiStupyMAPSpring.baseClasses;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Data;
 
+
+@Data
+@Entity
+@Table(name = "Employees")
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "employeeID")
     private int employeeID;
     @Column(name = "firstName")
     private String firstName;
@@ -20,14 +24,7 @@ public class Employee {
     @ManyToOne
     private int departmentID;
 
-    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, int emailAdress, int departmentID) {
-        this.employeeID = employeeID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.emailAdress = emailAdress;
-        this.departmentID = departmentID;
-    }
+
 
     public int getEmployeeID() {
         return employeeID;
