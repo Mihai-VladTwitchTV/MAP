@@ -1,9 +1,11 @@
-package map.project.MihaiStupyMAPSpring.baseClasses;
+package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 
 @Data
@@ -63,4 +65,10 @@ public class Employee {
     public void setDepartmentID(int departmentID) {
         this.department.setDepartmentID(departmentID);
     }
+
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeSkill> skills;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeProject> assignments;
 }
