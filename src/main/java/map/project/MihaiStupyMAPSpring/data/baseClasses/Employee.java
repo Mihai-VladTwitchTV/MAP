@@ -16,12 +16,12 @@ public class Employee {
 
     }///empty constructor used for database work
 
-    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAdress, Department department) {
+    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.emailAdress = emailAdress;
+        this.emailAddress = emailAddress;
         this.department = department;
     }///detailed constructor used for initialization
 
@@ -49,8 +49,8 @@ public class Employee {
 
     @Setter
     @Getter
-    @Column(name = "emailAdress")
-    private String emailAdress;
+    @Column(name = "emailAddress")
+    private String emailAddress;
 
     @Setter
     @ManyToOne

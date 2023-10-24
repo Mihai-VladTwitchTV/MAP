@@ -8,8 +8,8 @@ import lombok.Data;
 @Entity
 @Table(name = "DepartmentLeader")
 public class DepartmentLeader extends Employee implements lead {
-    public DepartmentLeader(int employeeID, String firstName, String lastName, int phoneNumber, String emailAdress, Department department) {
-        super(employeeID, firstName, lastName, phoneNumber, emailAdress, department);
+    public DepartmentLeader(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
+        super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
     }///used for initialization
 
     public DepartmentLeader() {

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -12,30 +15,75 @@ import java.util.Set;
 @Entity
 @Table(name = "Project")
 public class Project {
+    public Project() {
+    }
+
+    public Project(int projectID, Client client, Department department, String projectName, Date startDate, Date endDate, String status, String meetingType, Set<EmployeeProject> assignments, Set<ProjectCosts> costs, Set<ProjectMilestones> milestones) {
+        this.projectID = projectID;
+        this.client = client;
+        this.department = department;
+        this.projectName = projectName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.meetingType = meetingType;
+        this.assignments = assignments;
+        this.costs = costs;
+        this.milestones = milestones;
+    }
+
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectID;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "clientID")
     private Client client;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "departmentID")
     private Department department;
 
+    @Getter
+    @Setter
+    @Column(name = "projectName")
     private String projectName;
+
+    @Getter
+    @Setter
+    @Column(name = "projectName")
     private Date startDate;
+
+    @Getter
+    @Setter
+    @Column(name = "projectName")
     private Date endDate;
+
+    @Getter
+    @Setter
+    @Column(name = "projectName")
     private String status;
+
+    @Getter
+    @Setter
+    @Column(name = "projectName")
     private String meetingType;
 
+    @Getter
     @OneToMany(mappedBy = "project")
     private Set<EmployeeProject> assignments;
 
+    @Getter
     @OneToMany(mappedBy = "project")
     private Set<ProjectCosts> costs;
 
+    @Getter
     @OneToMany(mappedBy = "project")
     private Set<ProjectMilestones> milestones;
 }

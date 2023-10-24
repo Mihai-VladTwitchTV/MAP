@@ -9,6 +9,15 @@ import java.io.Serializable;
 @Table(name = "EmployeeProject")
 @IdClass(EmployeeProjectId.class)///aici e diferita implementarea fata de celalalt ManyToMany(EmployeeSkill), ar trebui sa alegem una numa sa nu pierdem puncte la consistenta
 public class EmployeeProject {
+    public EmployeeProject(Employee employee, Project project, Assignments assignments) {
+        this.employee = employee;
+        this.project = project;
+        this.assignments = assignments;
+    }
+
+    public EmployeeProject() {
+    }
+
     @Id
     @ManyToOne
     @JoinColumn(name = "employeeID")

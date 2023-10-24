@@ -3,6 +3,8 @@ package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -23,6 +25,9 @@ public class EmployeeSkill {
     @JoinColumn(name = "skillID")
     private Skill skill;
 
+    @Getter
+    @Setter
+    @Column(name = "skillLevel")
     private int skillLevel;
 }
 
