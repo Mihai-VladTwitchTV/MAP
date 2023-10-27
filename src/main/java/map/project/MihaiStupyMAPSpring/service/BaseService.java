@@ -8,8 +8,8 @@ import java.util.List;
 public abstract class BaseService<T, ID> {
     private final JpaRepository<T, ID> repository;
 
-    public BaseService(AssignmentsRepository repository) {
-        this.repository = repository;
+    public BaseService(JpaRepository repository) {
+        this.repository = (JpaRepository<T, ID>) repository;
     }
 
     public T save(T entity) {
