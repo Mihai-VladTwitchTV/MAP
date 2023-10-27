@@ -9,11 +9,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "Department")
 public class Department {
-    public Department(int departmentID, int maxEmployees, String specialization, DepartmentLeader leader) {
+    public Department(int departmentID, int maxEmployees, String specialization /*, DepartmentLeader leader */) {
         this.departmentID = departmentID;
         this.maxEmployees = maxEmployees;
         this.specialization = specialization;
-        this.leader = leader;
+        //this.leader = leader; this is bad because it creates a loop of dependencies with Departments and Employees(dep.leader)
     }///Detailed constructor for class initialization
 
     public Department() {

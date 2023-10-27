@@ -12,6 +12,19 @@ import java.util.Date;
 @Entity
 @Table(name = "Meetings")
 public class Meetings {
+    public Meetings() {
+    }
+
+    public Meetings(int meetingID, Department department, String title, Date startDate, Date endDate, String location, String meetingType) {
+        this.meetingID = meetingID;
+        this.department = department;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.location = location;
+        this.meetingType = meetingType;
+    }
+
     @Setter
     @Getter
     @Id

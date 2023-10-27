@@ -17,15 +17,21 @@ public class Client {
 
     @Setter
     @Getter
-    @Column(name = "clientName")
-    private String clientName;
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Setter
+    @Getter
+    @Column(name = "lastName")
+    private String lastName;
 
     public Client() {
     }
 
-    public Client(int clientID, String clientName, String emailAddress, int phoneNumber) {
+    public Client(int clientID, String firstName,String lastName, String emailAddress, int phoneNumber) {
         this.clientID = clientID;
-        this.clientName = clientName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
     }
