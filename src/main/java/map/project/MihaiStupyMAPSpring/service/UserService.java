@@ -4,8 +4,6 @@ import java.util.List;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import map.project.MihaiStupyMAPSpring.data.repository.User;
-import map.project.MihaiStupyMAPSpring.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
