@@ -25,6 +25,8 @@ public class Employee {
         this.department = department;
     }///detailed constructor used for initialization
 
+    boolean isFullTime,isPartTime,isDepartmentLeader = false;
+
     @Setter
     @Getter
     @Id

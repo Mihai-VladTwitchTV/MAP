@@ -1,6 +1,6 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
-
+import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkillId;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -31,10 +31,5 @@ public class EmployeeSkill {
     private int skillLevel;
 }
 
-@Embeddable
-@Data
-class EmployeeSkillId implements Serializable {
-    private int employeeID;
-    private int skillID;
-}
+
 

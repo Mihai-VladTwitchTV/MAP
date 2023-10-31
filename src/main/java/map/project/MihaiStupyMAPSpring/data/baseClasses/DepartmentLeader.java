@@ -10,14 +10,15 @@ import lombok.Data;
 public class DepartmentLeader extends Employee implements lead {
     public DepartmentLeader(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
         super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+        isDepartmentLeader = true;
     }///used for initialization
 
     public DepartmentLeader() {
     }///used when working with databases
 
     @Override
-    public void doLeaderStuff() {
-        System.out.println("Im a leader");
+    public void setIsLeader(boolean yn) {
+        isDepartmentLeader = yn;
 
     }
 }

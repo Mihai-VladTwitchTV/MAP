@@ -1,6 +1,7 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.DepartmentLeader;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.PartTimeEmployee;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,18 +11,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class DepartmentLeaderDirectoryCLI implements CommandLineRunner {
+public class PartTimeEmployeeDirectoryCLI implements CommandLineRunner {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     public static void main(String[] args) {
-        SpringApplication.run(DepartmentLeaderDirectoryCLI.class, args);
+        SpringApplication.run(PartTimeEmployeeDirectoryCLI.class, args);
     }
 
     @Override
     public void run(String... args) {
-        System.out.println("Welcome to the Department Leader Directory CLI!");
+        System.out.println("Welcome to the Part-Time Employee Directory CLI!");
         displayMenu();
     }
 
@@ -31,18 +32,18 @@ public class DepartmentLeaderDirectoryCLI implements CommandLineRunner {
 
         while (!exit) {
             System.out.println("\nChoose an option:");
-            System.out.println("1. List all department leaders");
-            System.out.println("2. Add a new department leader");
+            System.out.println("1. List all part-time employees");
+            System.out.println("2. Add a new part-time employee");
             System.out.println("3. Exit");
 
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    listAllDepartmentLeaders();
+                    listAllPartTimeEmployees();
                     break;
                 case 2:
-                    addDepartmentLeader(scanner);
+                    addPartTimeEmployee(scanner);
                     break;
                 case 3:
                     exit = true;
@@ -53,18 +54,18 @@ public class DepartmentLeaderDirectoryCLI implements CommandLineRunner {
         }
     }
 
-    private void listAllDepartmentLeaders() {
-        Iterable<DepartmentLeader> departmentLeaders = employeeRepository.findAllByIsLeader(true);
-        System.out.println("List of Department Leaders:");
-        departmentLeaders.forEach(leader -> {
-            System.out.println("Employee ID: " + leader.getEmployeeID() + ", Name: " + leader.getFirstName() + " " + leader.getLastName());
+    private void listAllPartTimeEmployees() {
+        Iterable<Employee> partTimeEmployees = employeeRepository.findAllByIsPartTime(true);
+        System.out.println("List of Part-Time Employees:");
+        partTimeEmployees.forEach(partTimeEmployee -> {
+            System.out.println("Employee ID: " + partTimeEmployee.getEmployeeID() + ", Name: " + partTimeEmployee.getFirstName() + " " + partTimeEmployee.getLastName());
         });
     }
 
-    private void addDepartmentLeader(Scanner scanner) {
-        System.out.println("Enter department leader details:");
+    private void addPartTimeEmployee(Scanner scanner) {
+        System.out.println("Enter part-time employee details:");
 
-        // Get department leader details from the user
+        // Get employee details from the user
         System.out.print("Employee ID: ");
         int employeeID = scanner.nextInt();
 
@@ -80,15 +81,15 @@ public class DepartmentLeaderDirectoryCLI implements CommandLineRunner {
         System.out.print("Email Address: ");
         String emailAddress = scanner.next();
 
-        // Create a new department leader
-        DepartmentLeader departmentLeader = new DepartmentLeader(employeeID, firstName, lastName, phoneNumber, emailAddress, null);
+        // Create a new part-time employee
+        PartTimeEmployee partTimeEmployee = new PartTimeEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, null);
 
-        // Set the isDepartmentLeader property to true for department leaders
-        departmentLeader.setIsLeader(true);
+        // Set the isPartTime property to true for part-time employees
+        partTimeEmployee.setIsPartTime(true);
 
-        // Save the department leader to the database
-        employeeRepository.save(departmentLeader);
+        // Save the part-time employee to the database
+        employeeRepository.save(partTimeEmployee);
 
-        System.out.println("Department Leader added successfully.");
+        System.out.println("Part-Time Employee added successfully.");
     }
 }

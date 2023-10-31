@@ -13,5 +13,11 @@ public class PartTimeEmployee extends Employee implements parttime {
 
     public PartTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
         super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+        isPartTime = true;
+    }
+
+    @Override
+    public void setIsPartTime(boolean yn) {
+        isPartTime = yn;
     }
 }

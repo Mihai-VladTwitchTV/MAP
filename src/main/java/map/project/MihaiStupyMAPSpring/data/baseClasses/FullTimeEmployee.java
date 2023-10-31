@@ -13,5 +13,11 @@ public class FullTimeEmployee extends Employee implements fulltime{
 
     public FullTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
         super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+        isFullTime = true;
+    }
+
+    @Override
+    public void setIsFullTime(boolean yn) {
+        isFullTime = yn;
     }
 }

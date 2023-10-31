@@ -1,6 +1,6 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
-
+import map.project.MihaiStupyMAPSpring.data.baseClasses.MeetingsEmployeeId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -42,22 +42,4 @@ public class MeetingsEmployee {
     private String attendanceStatus;
 }
 
-@Embeddable
-@Data
-class MeetingsEmployeeId implements Serializable {
-    public MeetingsEmployeeId() {
-    }
 
-    public MeetingsEmployeeId(int meetingID, int employeeID) {
-        this.meetingID = meetingID;
-        this.employeeID = employeeID;
-    }
-
-    @Setter
-    @Getter
-    private int meetingID;
-
-    @Getter
-    @Setter
-    private int employeeID;
-}
