@@ -7,18 +7,17 @@ import map.project.MihaiStupyMAPSpring.data.repository.ClientRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.Set;
 
-@SpringBootApplication
-public class ProjectDirectoryCLI implements CommandLineRunner {
+@ShellComponent
+public class ProjectDirectoryCLI {
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -29,150 +28,86 @@ public class ProjectDirectoryCLI implements CommandLineRunner {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(ProjectDirectoryCLI.class, args);
-    }
-
-    @Override
-    public void run(String... args) {
-        System.out.println("Welcome to the Project Directory CLI!");
-        displayMenu();
-    }
-
-    private void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
-
-        while (!exit) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. List all projects");
-            System.out.println("2. Add a new project");
-            System.out.println("3. Update a project");
-            System.out.println("4. Delete a project");
-            System.out.println("5. Exit");
-
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    listAllProjects();
-                    break;
-                case 2:
-                    addProject(scanner);
-                    break;
-                case 3:
-                    updateProject(scanner);
-                    break;
-                case 4:
-                    deleteProject(scanner);
-                    break;
-                case 5:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void listAllProjects() {
+    @ShellMethod(key = "list-projects", value = "List all projects")
+    public String listAllProjects() {
         Iterable<Project> projects = projectRepository.findAll();
-        System.out.println("List of Projects:");
-        projects.forEach(project -> System.out.println(project.getProjectID() + ": " + project.getProjectName()));
+        StringBuilder result = new StringBuilder("List of Projects:\n");
+        projects.forEach(project -> result.append(project.getProjectID()).append(": ").append(project.getProjectName()).append("\n"));
+        return result.toString();
     }
 
-    private void addProject(Scanner scanner) {
-        System.out.println("Enter project details:");
+    @ShellMethod(key = "add-project", value = "Add a new project")
+    public String addProject(
+            @ShellOption(value = "projectID", help = "Project ID") int projectID,
+            @ShellOption(value = "clientID", help = "Client ID") int clientID,
+            @ShellOption(value = "departmentID", help = "Department ID") int departmentID,
+            @ShellOption(value = "projectName", help = "Project Name") String projectName,
+            @ShellOption(value = "startDate", help = "Start Date (yyyy-MM-dd HH:mm:ss)") String startDateStr,
+            @ShellOption(value = "endDate", help = "End Date (yyyy-MM-dd HH:mm:ss)") String endDateStr,
+            @ShellOption(value = "status", help = "Status") String status,
+            @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
 
-        // Get project details from the user
-        System.out.print("Project ID: ");
-        int projectID = scanner.nextInt();
+        Client client = clientRepository.findById(clientID).orElse(null);
+        Department department = departmentRepository.findById(departmentID).orElse(null);
 
-        Client client = createClient(scanner);
-        Department department = createDepartment(scanner);
+        if (client != null && department != null) {
+            Date startDate = parseDate(startDateStr);
+            Date endDate = parseDate(endDateStr);
 
-        System.out.print("Project Name: ");
-        String projectName = scanner.next();
+            Project project = new Project(projectID, client, department, projectName, startDate, endDate, status, meetingType, null, null, null);
+            projectRepository.save(project);
 
-        System.out.print("Start Date (yyyy-MM-dd HH:mm:ss): ");
-        Date startDate = parseDate(scanner.next());
-
-        System.out.print("End Date (yyyy-MM-dd HH:mm:ss): ");
-        Date endDate = parseDate(scanner.next());
-
-        System.out.print("Status: ");
-        String status = scanner.next();
-
-        System.out.print("Meeting Type: ");
-        String meetingType = scanner.next();
-
-        // Create a new project
-        Project project = new Project(projectID, client, department, projectName, startDate, endDate, status, meetingType, null, null, null);
-
-        // Save the project to the database
-        projectRepository.save(project);
-
-        System.out.println("Project added successfully.");
+            return "Project added successfully.";
+        } else {
+            return "Client or Department not found.";
+        }
     }
 
-    private void updateProject(Scanner scanner) {
-        System.out.print("Enter project ID to update: ");
-        int projectID = scanner.nextInt();
+    @ShellMethod(key = "update-project", value = "Update a project")
+    public String updateProject(
+            @ShellOption(value = "projectID", help = "Project ID") int projectID,
+            @ShellOption(value = "clientID", help = "Client ID") int clientID,
+            @ShellOption(value = "departmentID", help = "Department ID") int departmentID,
+            @ShellOption(value = "projectName", help = "Project Name") String projectName,
+            @ShellOption(value = "startDate", help = "Start Date (yyyy-MM-dd HH:mm:ss)") String startDateStr,
+            @ShellOption(value = "endDate", help = "End Date (yyyy-MM-dd HH:mm:ss)") String endDateStr,
+            @ShellOption(value = "status", help = "Status") String status,
+            @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
+
+        Project project = projectRepository.findById(projectID).orElse(null);
+        Client client = clientRepository.findById(clientID).orElse(null);
+        Department department = departmentRepository.findById(departmentID).orElse(null);
+
+        if (project != null && client != null && department != null) {
+            project.setClient(client);
+            project.setDepartment(department);
+            project.setProjectName(projectName);
+
+            Date startDate = parseDate(startDateStr);
+            Date endDate = parseDate(endDateStr);
+
+            project.setStartDate(startDate);
+            project.setEndDate(endDate);
+            project.setStatus(status);
+            project.setMeetingType(meetingType);
+
+            projectRepository.save(project);
+            return "Project updated successfully.";
+        } else {
+            return "Project, Client, or Department not found.";
+        }
+    }
+
+    @ShellMethod(key = "delete-project", value = "Delete a project")
+    public String deleteProject(@ShellOption(value = "projectID", help = "Project ID") int projectID) {
         Project project = projectRepository.findById(projectID).orElse(null);
 
-        if (project == null) {
-            System.out.println("Project not found.");
-            return;
+        if (project != null) {
+            projectRepository.delete(project);
+            return "Project deleted successfully.";
+        } else {
+            return "Project not found.";
         }
-
-        System.out.println("Enter new project details:");
-
-        Client client = createClient(scanner);
-        project.setClient(client);
-
-        Department department = createDepartment(scanner);
-        project.setDepartment(department);
-
-        System.out.print("Project Name: ");
-        String projectName = scanner.next();
-        project.setProjectName(projectName);
-
-        System.out.print("Start Date (yyyy-MM-dd HH:mm:ss): ");
-        Date startDate = parseDate(scanner.next());
-        project.setStartDate(startDate);
-
-        System.out.print("End Date (yyyy-MM-dd HH:mm:ss): ");
-        Date endDate = parseDate(scanner.next());
-        project.setEndDate(endDate);
-
-        System.out.print("Status: ");
-        String status = scanner.next();
-        project.setStatus(status);
-
-        System.out.print("Meeting Type: ");
-        String meetingType = scanner.next();
-        project.setMeetingType(meetingType);
-
-        // Save the updated project to the database
-        projectRepository.save(project);
-
-        System.out.println("Project updated successfully.");
-    }
-
-    private void deleteProject(Scanner scanner) {
-        System.out.print("Enter project ID to delete: ");
-        int projectID = scanner.nextInt();
-        Project project = projectRepository.findById(projectID).orElse(null);
-
-        if (project == null) {
-            System.out.println("Project not found.");
-            return;
-        }
-
-        // Delete the project from the database
-        projectRepository.delete(project);
-
-        System.out.println("Project deleted successfully.");
     }
 
     private Date parseDate(String dateStr) {
@@ -183,25 +118,5 @@ public class ProjectDirectoryCLI implements CommandLineRunner {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private Client createClient(Scanner scanner) {
-        System.out.print("Client ID: ");
-        int clientID = scanner.nextInt();
-
-        Client client = new Client();
-        client.setClientID(clientID);
-
-        return client;
-    }
-
-    private Department createDepartment(Scanner scanner) {
-        System.out.print("Department ID: ");
-        int departmentID = scanner.nextInt();
-
-        Department department = new Department();
-        department.setDepartmentID(departmentID);
-
-        return department;
     }
 }

@@ -1,21 +1,21 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
-
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkillId;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Skill;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkill;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.SkillRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeSkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 
 import java.util.Scanner;
 
-@SpringBootApplication
-public class EmployeeSkillMTMDirectoryCLI implements CommandLineRunner {
+@ShellComponent
+public class EmployeeSkillMTMDirectoryCLI {
 
     @Autowired
     private EmployeeSkillRepository employeeSkillRepository;
@@ -26,127 +26,53 @@ public class EmployeeSkillMTMDirectoryCLI implements CommandLineRunner {
     @Autowired
     private SkillRepository skillRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(EmployeeSkillMTMDirectoryCLI.class, args);
-    }
-
-    @Override
-    public void run(String... args) {
-        System.out.println("Welcome to the Employee-Skill Relationship Directory CLI!");
-        displayMenu();
-    }
-
-    private void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
-
-        while (!exit) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. List all employee-skill relationships");
-            System.out.println("2. Add a new employee-skill relationship");
-            System.out.println("3. Delete an employee-skill relationship");
-            System.out.println("4. Exit");
-
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    listAllEmployeeSkillRelationships();
-                    break;
-                case 2:
-                    addEmployeeSkillRelationship(scanner);
-                    break;
-                case 3:
-                    deleteEmployeeSkillRelationship(scanner);
-                    break;
-                case 4:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void listAllEmployeeSkillRelationships() {
+    @ShellMethod(key = "list-employee-skills", value = "List all employee-skill relationships")
+    public String listAllEmployeeSkillRelationships() {
         Iterable<EmployeeSkill> employeeSkills = employeeSkillRepository.findAll();
-        System.out.println("List of Employee-Skill Relationships:");
+        StringBuilder result = new StringBuilder("List of Employee-Skill Relationships:\n");
         employeeSkills.forEach(employeeSkill -> {
             Employee employee = employeeSkill.getEmployee();
             Skill skill = employeeSkill.getSkill();
-            System.out.println("Employee ID: " + employee.getEmployeeID() + ", Skill ID: " + skill.getSkillID() + ", Skill Level: " + employeeSkill.getSkillLevel());
+            result.append("Employee ID: ").append(employee.getEmployeeID()).append(", Skill ID: ").append(skill.getSkillID()).append(", Skill Level: ").append(employeeSkill.getSkillLevel()).append("\n");
         });
+        return result.toString();
     }
 
-    private void addEmployeeSkillRelationship(Scanner scanner) {
-        System.out.println("Enter employee-skill relationship details:");
+    @ShellMethod(key = "add-employee-skill", value = "Add a new employee-skill relationship")
+    public String addEmployeeSkillRelationship(
+            @ShellOption(value = "employeeID", help = "Employee ID") int employeeID,
+            @ShellOption(value = "skillID", help = "Skill ID") int skillID,
+            @ShellOption(value = "skillLevel", help = "Skill Level") int skillLevel) {
 
-        // Get employee and skill details from the user
-        Employee employee = createEmployee(scanner);
-        Skill skill = createSkill(scanner);
-
-        System.out.print("Skill Level: ");
-        int skillLevel = scanner.nextInt();
-
-        // Create a new employee-skill relationship
-        EmployeeSkill employeeSkill = new EmployeeSkill();
-        employeeSkill.setEmployee(employee);
-        employeeSkill.setSkill(skill);
-        employeeSkill.setSkillLevel(skillLevel);
-
-        // Save the employee-skill relationship to the database
-        employeeSkillRepository.save(employeeSkill);
-
-        System.out.println("Employee-Skill Relationship added successfully.");
-    }
-
-    private void deleteEmployeeSkillRelationship(Scanner scanner) {
-        System.out.println("Enter employee ID to delete the relationship:");
-        int employeeID = scanner.nextInt();
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
-
-        System.out.println("Enter skill ID to delete the relationship:");
-        int skillID = scanner.nextInt();
         Skill skill = skillRepository.findById(skillID).orElse(null);
 
         if (employee == null || skill == null) {
-            System.out.println("Employee or Skill not found. Unable to delete the relationship.");
-            return;
+            return "Employee or Skill not found. Unable to add the relationship.";
         }
 
-        EmployeeSkill employeeSkill = new EmployeeSkill();
-        employeeSkill.setEmployee(employee);
-        employeeSkill.setSkill(skill);
+        EmployeeSkill employeeSkill = EmployeeSkill.create(employee, skill, skillLevel);
+        employeeSkillRepository.save(employeeSkill);
 
-        // Delete the employee-skill relationship from the database
-        employeeSkillRepository.delete(employeeSkill);
 
-        System.out.println("Employee-Skill Relationship deleted successfully.");
+
+        return "Employee-Skill Relationship added successfully.";
     }
 
-    private Employee createEmployee(Scanner scanner) {
-        System.out.print("Enter Employee ID: ");
-        int employeeID = scanner.nextInt();
+    @ShellMethod(key = "delete-employee-skill", value = "Delete an employee-skill relationship")
+    public String deleteEmployeeSkillRelationship(
+            @ShellOption(value = "employeeID", help = "Employee ID") int employeeID,
+            @ShellOption(value = "skillID", help = "Skill ID") int skillID) {
 
-        Employee employee = employeeRepository.findById(employeeID).orElse(null);
+        EmployeeSkillId employeeSkillId = new EmployeeSkillId(employeeID, skillID);
+        EmployeeSkill employeeSkill = employeeSkillRepository.findById(employeeSkillId);
 
-        if (employee == null) {
-            System.out.println("Employee not found. Please add the employee first.");
+        if (employeeSkill != null) {
+            employeeSkillRepository.delete(employeeSkill);
+            return "Employee-Skill Relationship deleted successfully.";
+        } else {
+            return "Employee-Skill Relationship not found. Unable to delete the relationship.";
         }
-
-        return employee;
     }
 
-    private Skill createSkill(Scanner scanner) {
-        System.out.print("Enter Skill ID: ");
-        int skillID = scanner.nextInt();
-
-        Skill skill = skillRepository.findById(skillID).orElse(null);
-
-        if (skill == null) {
-            System.out.println("Skill not found. Please add the skill first.");
-        }
-
-        return skill;
-    }
 }

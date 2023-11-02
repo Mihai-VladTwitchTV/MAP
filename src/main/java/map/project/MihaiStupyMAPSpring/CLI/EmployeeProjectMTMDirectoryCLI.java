@@ -7,14 +7,14 @@ import map.project.MihaiStupyMAPSpring.data.repository.EmployeeProjectRepository
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 
 import java.util.Scanner;
 
-@SpringBootApplication
-public class EmployeeProjectMTMDirectoryCLI implements CommandLineRunner {
+@ShellComponent
+public class EmployeeProjectMTMDirectoryCLI {
 
     @Autowired
     private EmployeeProjectRepository employeeProjectRepository;
@@ -25,119 +25,51 @@ public class EmployeeProjectMTMDirectoryCLI implements CommandLineRunner {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(EmployeeProjectMTMDirectoryCLI.class, args);
-    }
-
-    @Override
-    public void run(String... args) {
-        System.out.println("Welcome to the Employee-Project Relationship Directory CLI!");
-        displayMenu();
-    }
-
-    private void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
-
-        while (!exit) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. List all employee-project relationships");
-            System.out.println("2. Add a new employee-project relationship");
-            System.out.println("3. Delete an employee-project relationship");
-            System.out.println("4. Exit");
-
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    listAllEmployeeProjectRelationships();
-                    break;
-                case 2:
-                    addEmployeeProjectRelationship(scanner);
-                    break;
-                case 3:
-                    deleteEmployeeProjectRelationship(scanner);
-                    break;
-                case 4:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void listAllEmployeeProjectRelationships() {
+    @ShellMethod(key = "list-employee-projects", value = "List all employee-project relationships")
+    public String listAllEmployeeProjectRelationships() {
         Iterable<EmployeeProject> employeeProjects = employeeProjectRepository.findAll();
-        System.out.println("List of Employee-Project Relationships:");
+        StringBuilder result = new StringBuilder("List of Employee-Project Relationships:\n");
         employeeProjects.forEach(employeeProject -> {
             Employee employee = employeeProject.getEmployee();
             Project project = employeeProject.getProject();
-            System.out.println("Employee ID: " + employee.getEmployeeID() + ", Project ID: " + project.getProjectID());
+            result.append("Employee ID: ").append(employee.getEmployeeID()).append(", Project ID: ").append(project.getProjectID()).append("\n");
         });
+        return result.toString();
     }
 
-    private void addEmployeeProjectRelationship(Scanner scanner) {
-        System.out.println("Enter employee-project relationship details:");
+    @ShellMethod(key = "add-employee-project", value = "Add a new employee-project relationship")
+    public String addEmployeeProjectRelationship(
+            @ShellOption(value = "employeeID", help = "Employee ID") int employeeID,
+            @ShellOption(value = "projectID", help = "Project ID") int projectID) {
 
-        // Get employee and project details from the user
-        Employee employee = createEmployee(scanner);
-        Project project = createProject(scanner);
-
-        // Create a new employee-project relationship
-        EmployeeProject employeeProject = new EmployeeProject(employee, project, null);
-
-        // Save the employee-project relationship to the database
-        employeeProjectRepository.save(employeeProject);
-
-        System.out.println("Employee-Project Relationship added successfully.");
-    }
-
-    private void deleteEmployeeProjectRelationship(Scanner scanner) {
-        System.out.println("Enter employee ID to delete the relationship:");
-        int employeeID = scanner.nextInt();
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
-
-        System.out.println("Enter project ID to delete the relationship:");
-        int projectID = scanner.nextInt();
         Project project = projectRepository.findById(projectID).orElse(null);
 
         if (employee == null || project == null) {
-            System.out.println("Employee or Project not found. Unable to delete the relationship.");
-            return;
+            return "Employee or Project not found. Unable to add the relationship.";
         }
 
         EmployeeProject employeeProject = new EmployeeProject(employee, project, null);
+        employeeProjectRepository.save(employeeProject);
 
-        // Delete the employee-project relationship from the database
-        employeeProjectRepository.delete(employeeProject);
-
-        System.out.println("Employee-Project Relationship deleted successfully.");
+        return "Employee-Project Relationship added successfully.";
     }
 
-    private Employee createEmployee(Scanner scanner) {
-        System.out.print("Enter Employee ID: ");
-        int employeeID = scanner.nextInt();
+    @ShellMethod(key = "delete-employee-project", value = "Delete an employee-project relationship")
+    public String deleteEmployeeProjectRelationship(
+            @ShellOption(value = "employeeID", help = "Employee ID") int employeeID,
+            @ShellOption(value = "projectID", help = "Project ID") int projectID) {
 
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
-
-        if (employee == null) {
-            System.out.println("Employee not found. Please add the employee first.");
-        }
-
-        return employee;
-    }
-
-    private Project createProject(Scanner scanner) {
-        System.out.print("Enter Project ID: ");
-        int projectID = scanner.nextInt();
-
         Project project = projectRepository.findById(projectID).orElse(null);
 
-        if (project == null) {
-            System.out.println("Project not found. Please add the project first.");
+        if (employee == null || project == null) {
+            return "Employee or Project not found. Unable to delete the relationship.";
         }
 
-        return project;
+        EmployeeProject employeeProject = new EmployeeProject(employee, project, null);
+        employeeProjectRepository.delete(employeeProject);
+
+        return "Employee-Project Relationship deleted successfully.";
     }
 }
