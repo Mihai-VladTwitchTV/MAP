@@ -22,7 +22,7 @@ public class DepartmentLeaderDirectoryCLI {
     @ShellMethod(key = "list-department-leaders", value = "List all department leaders")
     public String listAllDepartmentLeaders() {
         StringBuilder result = new StringBuilder("List of Department Leaders:\n");
-        Iterable<DepartmentLeader> departmentLeaders = employeeRepository.findAllByIsLeader(true);
+        Iterable<DepartmentLeader> departmentLeaders = employeeRepository.findAllByIsDepartmentLeader(true);
         departmentLeaders.forEach(leader -> result.append("Employee ID: ").append(leader.getEmployeeID()).append(", Name: ").append(leader.getFirstName()).append(" ").append(leader.getLastName()).append("\n"));
         return result.toString();
     }

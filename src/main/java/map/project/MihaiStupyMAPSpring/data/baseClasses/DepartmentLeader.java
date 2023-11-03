@@ -21,4 +21,9 @@ public class DepartmentLeader extends Employee implements lead {
         isDepartmentLeader = yn;
 
     }
+
+    public boolean getIsLeader() {
+        return isDepartmentLeader;
+
+    }
 }

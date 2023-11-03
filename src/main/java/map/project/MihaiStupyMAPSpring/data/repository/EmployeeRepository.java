@@ -13,7 +13,7 @@ public interface EmployeeRepository extends BaseRepository<Employee, Integer> {
 
     Iterable<Employee> findAllByIsPartTime(boolean yn);
 
-    Iterable<DepartmentLeader> findAllByIsLeader(boolean yn);
+    Iterable<DepartmentLeader> findAllByIsDepartmentLeader(boolean yn);
     // Add specific repository methods here, if needed
 }
 

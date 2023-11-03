@@ -20,7 +20,7 @@ public class Department {
     }///Empty constructor for database work
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
     @Column(name = "departmentID")
