@@ -12,7 +12,6 @@ public class Client {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int clientID;
 
     @Setter

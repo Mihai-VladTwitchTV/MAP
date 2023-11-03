@@ -1,12 +1,9 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkillId;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 @Data
 @Entity
@@ -29,7 +26,16 @@ public class EmployeeSkill {
     @Setter
     @Column(name = "skillLevel")
     private int skillLevel;
+
+    public static EmployeeSkill create(Employee employee, Skill skill, int skillLevel) {
+        EmployeeSkill employeeSkill = new EmployeeSkill();
+        EmployeeSkillId id = new EmployeeSkillId();
+        id.setEmployeeID(employee.getEmployeeID());
+        id.setSkillID(skill.getSkillID());
+        employeeSkill.setId(id);
+        employeeSkill.setEmployee(employee);
+        employeeSkill.setSkill(skill);
+        employeeSkill.setSkillLevel(skillLevel);
+        return employeeSkill;
+    }
 }
-
-
-

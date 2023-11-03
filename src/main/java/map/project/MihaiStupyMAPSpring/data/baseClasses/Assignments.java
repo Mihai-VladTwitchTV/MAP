@@ -20,7 +20,6 @@ public class Assignments {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Setter

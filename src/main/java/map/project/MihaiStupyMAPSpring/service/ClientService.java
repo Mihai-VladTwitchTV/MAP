@@ -12,7 +12,7 @@ import java.util.List;
 public class ClientService extends BaseService<Client, Integer> {
     @Autowired
     public ClientService(ClientRepository repository) {
-        super((AssignmentsRepository) repository);
+        super((ClientRepository) repository);
     }
 
     // Add specific service methods for Client, if needed

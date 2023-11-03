@@ -20,7 +20,7 @@ public class Department {
     }///Empty constructor for database work
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     @Setter
     @Column(name = "departmentID")
@@ -32,11 +32,10 @@ public class Department {
     private int maxEmployees;
     @Column(name = "specialization")
     private String specialization;
-
-    @Getter
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "leaderID")
-    private DepartmentLeader leader;
+//    @Getter
+//    @Setter
+//    @OneToOne
+//    @JoinColumn(name = "leaderID")
+//    private DepartmentLeader leader;
 
 }

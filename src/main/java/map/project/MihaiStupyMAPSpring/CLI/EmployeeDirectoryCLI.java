@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 
 import java.util.Scanner;
 
 @SpringBootApplication
-public class EmployeeDirectoryCLI implements CommandLineRunner {
+@ShellComponent
+public class EmployeeDirectoryCLI {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -20,160 +24,55 @@ public class EmployeeDirectoryCLI implements CommandLineRunner {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(EmployeeDirectoryCLI.class, args);
-    }
-
-    @Override
-    public void run(String... args) {
-        System.out.println("Welcome to the Employee Directory CLI!");
-        displayMenu();
-    }
-
-    private void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
-
-        while (!exit) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. List all employees");
-            System.out.println("2. Add a new employee");
-            System.out.println("3. Update an employee");
-            System.out.println("4. Delete an employee");
-            System.out.println("5. Exit");
-
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    listAllEmployees();
-                    break;
-                case 2:
-                    addEmployee(scanner);
-                    break;
-                case 3:
-                    updateEmployee(scanner);
-                    break;
-                case 4:
-                    deleteEmployee(scanner);
-                    break;
-                case 5:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-    private void listAllEmployees() {
+    @ShellMethod(key = "list-employees", value = "List all employees")
+    public String listAllEmployees() {
+        StringBuilder result = new StringBuilder("List of Employees:\n");
         Iterable<Employee> employees = employeeRepository.findAll();
-        System.out.println("List of Employees:");
-        employees.forEach(employee -> System.out.println(employee.getEmployeeID() + ": " + employee.getFirstName() + " " + employee.getLastName()));
+        employees.forEach(employee -> result.append(employee.getEmployeeID()).append(": ").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("\n"));
+        return result.toString();
     }
 
-    private void addEmployee(Scanner scanner) {
-        System.out.println("Enter employee details:");
-
-        // Get employee details from the user
-        System.out.print("Employee ID: ");
-        int employeeId = scanner.nextInt();
-
-        System.out.print("First Name: ");
-        String firstName = scanner.next();
-
-        System.out.print("Last Name: ");
-        String lastName = scanner.next();
-
-        System.out.print("Phone Number: ");
-        int phoneNumber = scanner.nextInt();
-
-        System.out.print("Email Address: ");
-        String emailAddress = scanner.next();
-
-        // Create a new department
-        Department department = createDepartment(scanner);
-
-        // Create a new employee
-        Employee employee = new Employee(employeeId, firstName, lastName, phoneNumber, emailAddress, department);
-
-        // Save the employee to the database
-        employeeRepository.save(employee);
-
-        System.out.println("Employee added successfully.");
-    }
-
-    private void updateEmployee(Scanner scanner) {
-        System.out.print("Enter employee ID to update: ");
-        int employeeId = scanner.nextInt();
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-
-        if (employee == null) {
-            System.out.println("Employee not found.");
-            return;
+    @ShellMethod(key = "add-employee", value = "Add a new employee")
+    public String addEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-dept", "--department"}) int departmentID) {
+        Department department = departmentRepository.findById(departmentID);
+        if (department != null) {
+            Employee employee = new Employee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+            employeeRepository.save(employee);
+            return "Employee added successfully.";
+        } else {
+            return "Department not found.";
         }
-
-        System.out.println("Enter new employee details:");
-
-        System.out.print("First Name: ");
-        String firstName = scanner.next();
-        employee.setFirstName(firstName);
-
-        System.out.print("Last Name: ");
-        String lastName = scanner.next();
-        employee.setLastName(lastName);
-
-        System.out.print("Phone Number: ");
-        int phoneNumber = scanner.nextInt();
-        employee.setPhoneNumber(phoneNumber);
-
-        System.out.print("Email Address: ");
-        String emailAddress = scanner.next();
-        employee.setEmailAddress(emailAddress);
-
-        // Update the department
-        Department department = createDepartment(scanner);
-        employee.setDepartment(department);
-
-        // Save the updated employee to the database
-        employeeRepository.save(employee);
-
-        System.out.println("Employee updated successfully.");
     }
 
-    private void deleteEmployee(Scanner scanner) {
-        System.out.print("Enter employee ID to delete: ");
-        int employeeId = scanner.nextInt();
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-
-        if (employee == null) {
-            System.out.println("Employee not found.");
-            return;
+    @ShellMethod(key = "update-employee", value = "Update an employee")
+    public String updateEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-dept", "--department"}) int departmentID) {
+        Employee employee = employeeRepository.findById(employeeID).orElse(null);
+        if (employee != null) {
+            employee.setFirstName(firstName);
+            employee.setLastName(lastName);
+            employee.setPhoneNumber(phoneNumber);
+            employee.setEmailAddress(emailAddress);
+            Department department = departmentRepository.findById(departmentID);
+            if (department != null) {
+                employee.setDepartment(department);
+                employeeRepository.save(employee);
+                return "Employee updated successfully.";
+            } else {
+                return "Department not found.";
+            }
+        } else {
+            return "Employee not found.";
         }
-
-        // Delete the employee from the database
-        employeeRepository.delete(employee);
-
-        System.out.println("Employee deleted successfully.");
     }
 
-    private Department createDepartment(Scanner scanner) {
-        System.out.println("Enter department details:");
-
-        System.out.print("Department ID: ");
-        int departmentId = scanner.nextInt();
-
-        System.out.print("Max Employees: ");
-        int maxEmployees = scanner.nextInt();
-
-        System.out.print("Specialization: ");
-        String specialization = scanner.next();
-
-        Department department = new Department(departmentId, maxEmployees, specialization);
-
-        // Save the department to the database
-        departmentRepository.save(department);
-
-        return department;
+    @ShellMethod(key = "delete-employee", value = "Delete an employee")
+    public String deleteEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID) {
+        Employee employee = employeeRepository.findById(employeeID).orElse(null);
+        if (employee != null) {
+            employeeRepository.delete(employee);
+            return "Employee deleted successfully.";
+        } else {
+            return "Employee not found.";
+        }
     }
 }

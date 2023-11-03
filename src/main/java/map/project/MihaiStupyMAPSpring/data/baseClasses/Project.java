@@ -35,7 +35,6 @@ public class Project {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectID;
 
     @Getter
@@ -52,27 +51,28 @@ public class Project {
 
     @Getter
     @Setter
-    @Column(name = "projectName")
+    @Column(name = "project_name", insertable = false, updatable = false)
     private String projectName;
+
 
     @Getter
     @Setter
-    @Column(name = "projectName")
+    @Column(name = "startDate")
     private Date startDate;
 
     @Getter
     @Setter
-    @Column(name = "projectName")
+    @Column(name = "endDate")
     private Date endDate;
 
     @Getter
     @Setter
-    @Column(name = "projectName")
+    @Column(name = "status")
     private String status;
 
     @Getter
     @Setter
-    @Column(name = "projectName")
+    @Column(name = "meetingType")
     private String meetingType;
 
     @Getter
