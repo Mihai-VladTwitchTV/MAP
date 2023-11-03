@@ -23,7 +23,6 @@ public class ProjectMilestones {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int milestoneID;
 
     @Getter

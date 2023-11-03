@@ -28,7 +28,6 @@ public class Meetings {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int meetingID;
 
     @Setter

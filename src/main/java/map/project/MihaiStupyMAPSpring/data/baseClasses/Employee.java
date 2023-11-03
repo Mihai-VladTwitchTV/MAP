@@ -30,7 +30,7 @@ public class Employee {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+//    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "employeeID")
     private int employeeID;
 

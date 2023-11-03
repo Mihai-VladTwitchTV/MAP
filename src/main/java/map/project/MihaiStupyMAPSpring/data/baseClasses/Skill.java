@@ -12,7 +12,6 @@ public class Skill {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int skillID;
 
     @Getter

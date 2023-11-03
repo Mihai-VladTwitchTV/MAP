@@ -34,7 +34,7 @@ public class EmployeeDirectoryCLI {
 
     @ShellMethod(key = "add-employee", value = "Add a new employee")
     public String addEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-dept", "--department"}) int departmentID) {
-        Department department = departmentRepository.findById(departmentID).orElse(null);
+        Department department = departmentRepository.findById(departmentID);
         if (department != null) {
             Employee employee = new Employee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
             employeeRepository.save(employee);
@@ -52,7 +52,7 @@ public class EmployeeDirectoryCLI {
             employee.setLastName(lastName);
             employee.setPhoneNumber(phoneNumber);
             employee.setEmailAddress(emailAddress);
-            Department department = departmentRepository.findById(departmentID).orElse(null);
+            Department department = departmentRepository.findById(departmentID);
             if (department != null) {
                 employee.setDepartment(department);
                 employeeRepository.save(employee);

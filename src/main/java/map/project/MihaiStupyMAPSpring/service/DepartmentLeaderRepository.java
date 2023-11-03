@@ -1,4 +1,4 @@
-package map.project.MihaiStupyMAPSpring.service;
-
-public class DepartmentLeaderRepository {
-}
+//package map.project.MihaiStupyMAPSpring.service;
+//
+//public class DepartmentLeaderRepository {
+//}

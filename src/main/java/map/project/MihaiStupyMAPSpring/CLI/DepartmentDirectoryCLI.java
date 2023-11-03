@@ -36,20 +36,21 @@ public class DepartmentDirectoryCLI {
 
     @ShellMethod(key = "update-department", value = "Update a department")
     public String updateDepartment(@ShellOption({"-id", "--departmentID"}) int departmentID, @ShellOption({"-max", "--maxEmployees"}) int maxEmployees, @ShellOption({"-spec", "--specialization"}) String specialization) {
-        Department department = departmentRepository.findById(departmentID).orElse(null);
+        Department department = departmentRepository.findById(departmentID);
         if (department != null) {
             department.setMaxEmployees(maxEmployees);
             department.setSpecialization(specialization);
             departmentRepository.save(department);
-            return "Department updated successfully.";
+            return "Department with ID " + departmentID + " updated successfully.";
         } else {
-            return "Department not found.";
+            return "Department with ID " + departmentID + " not found.";
         }
     }
 
+
     @ShellMethod(key = "delete-department", value = "Delete a department")
     public String deleteDepartment(@ShellOption({"-id", "--departmentID"}) int departmentID) {
-        Department department = departmentRepository.findById(departmentID).orElse(null);
+        Department department = departmentRepository.findById(departmentID);
         if (department != null) {
             departmentRepository.delete(department);
             return "Department deleted successfully.";

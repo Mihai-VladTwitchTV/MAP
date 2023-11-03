@@ -35,7 +35,6 @@ public class Project {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectID;
 
     @Getter

@@ -48,7 +48,7 @@ public class ProjectDirectoryCLI {
             @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
 
         Client client = clientRepository.findById(clientID).orElse(null);
-        Department department = departmentRepository.findById(departmentID).orElse(null);
+        Department department = departmentRepository.findById(departmentID);
 
         if (client != null && department != null) {
             Date startDate = parseDate(startDateStr);
@@ -76,7 +76,7 @@ public class ProjectDirectoryCLI {
 
         Project project = projectRepository.findById(projectID).orElse(null);
         Client client = clientRepository.findById(clientID).orElse(null);
-        Department department = departmentRepository.findById(departmentID).orElse(null);
+        Department department = departmentRepository.findById(departmentID);
 
         if (project != null && client != null && department != null) {
             project.setClient(client);

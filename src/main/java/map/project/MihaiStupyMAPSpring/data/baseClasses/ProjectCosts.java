@@ -28,7 +28,6 @@ public class ProjectCosts {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int costID;
 
     @Getter
