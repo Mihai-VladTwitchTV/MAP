@@ -19,6 +19,12 @@ public class DepartmentDirectoryCLI {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    public DepartmentDirectoryCLI(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
+
+
     @ShellMethod(key = "list-departments", value = "List all departments")
     public String listAllDepartments() {
         StringBuilder result = new StringBuilder("List of Departments:\n");

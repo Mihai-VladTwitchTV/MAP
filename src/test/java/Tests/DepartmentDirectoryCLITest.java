@@ -1,72 +1,55 @@
 package Tests;
 
-import map.project.MihaiStupyMAPSpring.CLI.DepartmentDirectoryCLI;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
+import map.project.MihaiStupyMAPSpring.CLI.DepartmentDirectoryCLI;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.shell.Shell;
 
-import javax.print.DocFlavor;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-@RunWith(MockitoJUnitRunner.class)
 public class DepartmentDirectoryCLITest {
-
-    @InjectMocks
-    private DepartmentDirectoryCLI departmentDirectoryCLI;
 
     @Mock
     private DepartmentRepository departmentRepository;
 
-    @Mock
-    private Shell shell;
+    private DepartmentDirectoryCLI departmentDirectoryCLI;
 
-    @BeforeEach
-    void init() {
-        MockitoAnnotations.openMocks(this);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        departmentDirectoryCLI = new DepartmentDirectoryCLI(departmentRepository); // Inject the mock repository
+    }
+
+    @Test
+    public void testListAllDepartments() {
+        Department department1 = new Department(1, 10, "IT");
+        Department department2 = new Department(2, 15, "HR");
+
+        Mockito.when(departmentRepository.findAll()).thenReturn(List.of(department1, department2));
+
+        String result = departmentDirectoryCLI.listAllDepartments();
+
+        String expected = "List of Departments:\n1: IT\n2: HR\n";
+        assertEquals(expected, result);
     }
 
     @Test
     public void testAddDepartment() {
-        Department department = new Department();
-        department.setDepartmentID(1);
-        department.setMaxEmployees(100);
-        department.setSpecialization("Engineering");
+        int departmentId = 1;
+        int maxEmployees = 10;
+        String specialization = "IT";
 
-        Mockito.when(departmentRepository.save(Mockito.any(Department.class))).thenReturn(department);
+        String result = departmentDirectoryCLI.addDepartment(departmentId, maxEmployees, specialization);
 
-        String result = departmentDirectoryCLI.addDepartment(1, 100, "Engineering");
         assertEquals("Department added successfully.", result);
+        Mockito.verify(departmentRepository).save(Mockito.any());
     }
 
-    @Test
-    public void testUpdateDepartment() {
-        Department department = new Department();
-        department.setDepartmentID(1);
-        department.setMaxEmployees(100);
-        department.setSpecialization("Engineering");
-
-        Mockito.when(departmentRepository.save(Mockito.any(Department.class))).thenReturn(department);
-
-        String result = departmentDirectoryCLI.addDepartment(1, 100, "Engineering");
-        assertEquals("Department added successfully.", result);
-
-
-        department.setSpecialization("IT");
-        department.setMaxEmployees(20);
-        int maxEmployees = department.getMaxEmployees();
-        String specialization = department.getSpecialization();
-        assertEquals(maxEmployees,20);
-        assertEquals(specialization,"IT");
-
-
-    }
+    // Add similar tests for updateDepartment and deleteDepartment methods.
 }

@@ -8,5 +8,9 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
     // Add specific repository methods here, if needed
     Department findById(int departmentID);
+
+    Department createDepartment(Department department);
+
+    Department updateDepartment(int departmentId, Department updatedDepartment);
 }
 
