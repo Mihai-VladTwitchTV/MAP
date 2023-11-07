@@ -4,6 +4,7 @@ import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkillId;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Skill;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.EmployeeSkill;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.SkillRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeSkillRepository;
@@ -26,8 +27,12 @@ public class EmployeeSkillMTMDirectoryCLI {
     @Autowired
     private SkillRepository skillRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-employee-skills", value = "List all employee-skill relationships")
     public String listAllEmployeeSkillRelationships() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<EmployeeSkill> employeeSkills = employeeSkillRepository.findAll();
         StringBuilder result = new StringBuilder("List of Employee-Skill Relationships:\n");
         employeeSkills.forEach(employeeSkill -> {
@@ -44,7 +49,9 @@ public class EmployeeSkillMTMDirectoryCLI {
             @ShellOption(value = "skillID", help = "Skill ID") int skillID,
             @ShellOption(value = "skillLevel", help = "Skill Level") int skillLevel) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Skill skill = skillRepository.findById(skillID).orElse(null);
 
         if (employee == null || skill == null) {
@@ -52,6 +59,7 @@ public class EmployeeSkillMTMDirectoryCLI {
         }
 
         EmployeeSkill employeeSkill = EmployeeSkill.create(employee, skill, skillLevel);
+        eventPublisher.publishRepositoryMethodEvent(this);
         employeeSkillRepository.save(employeeSkill);
 
 
@@ -64,10 +72,13 @@ public class EmployeeSkillMTMDirectoryCLI {
             @ShellOption(value = "employeeID", help = "Employee ID") int employeeID,
             @ShellOption(value = "skillID", help = "Skill ID") int skillID) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         EmployeeSkillId employeeSkillId = new EmployeeSkillId(employeeID, skillID);
+        eventPublisher.publishRepositoryMethodEvent(this);
         EmployeeSkill employeeSkill = employeeSkillRepository.findById(employeeSkillId);
 
         if (employeeSkill != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             employeeSkillRepository.delete(employeeSkill);
             return "Employee-Skill Relationship deleted successfully.";
         } else {

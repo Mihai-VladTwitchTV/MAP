@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Meetings;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.MeetingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -19,8 +20,12 @@ public class MeetingsDirectoryCLI {
     @Autowired
     private MeetingsRepository meetingsRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-meetings", value = "List all meetings")
     public String listAllMeetings() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<Meetings> meetings = meetingsRepository.findAll();
         StringBuilder result = new StringBuilder("List of Meetings:\n");
         meetings.forEach(meeting -> result.append(meeting.getMeetingID()).append(": ").append(meeting.getTitle()).append("\n"));
@@ -44,6 +49,7 @@ public class MeetingsDirectoryCLI {
         Date endDate = parseDate(endDateStr);
 
         Meetings meeting = new Meetings(meetingID, department, title, startDate, endDate, location, meetingType);
+        eventPublisher.publishRepositoryMethodEvent(this);
         meetingsRepository.save(meeting);
 
         return "Meeting added successfully.";
@@ -59,6 +65,7 @@ public class MeetingsDirectoryCLI {
             @ShellOption(value = "location", help = "Location") String location,
             @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Meetings existingMeeting = meetingsRepository.findById(meetingID).orElse(null);
 
         if (existingMeeting == null) {
@@ -78,6 +85,7 @@ public class MeetingsDirectoryCLI {
         existingMeeting.setLocation(location);
         existingMeeting.setMeetingType(meetingType);
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         meetingsRepository.save(existingMeeting);
 
         return "Meeting updated successfully.";
@@ -85,12 +93,13 @@ public class MeetingsDirectoryCLI {
 
     @ShellMethod(key = "delete-meeting", value = "Delete a meeting")
     public String deleteMeeting(@ShellOption(value = "meetingID", help = "Meeting ID") int meetingID) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Meetings meeting = meetingsRepository.findById(meetingID).orElse(null);
 
         if (meeting == null) {
             return "Meeting not found.";
         }
-
+        eventPublisher.publishRepositoryMethodEvent(this);
         meetingsRepository.delete(meeting);
 
         return "Meeting deleted successfully.";

@@ -1,6 +1,7 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Skill;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -15,8 +16,12 @@ public class SkillDirectoryCLI {
     @Autowired
     private SkillRepository skillRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-skills", value = "List all skills")
     public String listAllSkills() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<Skill> skills = skillRepository.findAll();
         StringBuilder result = new StringBuilder("List of Skills:\n");
         skills.forEach(skill -> result.append(skill.getSkillID()).append(": ").append(skill.getSkillName()).append("\n"));
@@ -34,6 +39,7 @@ public class SkillDirectoryCLI {
         skill.setSkillName(skillName);
         skill.setDescription(description);
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         skillRepository.save(skill);
 
         return "Skill added successfully.";
@@ -45,12 +51,14 @@ public class SkillDirectoryCLI {
             @ShellOption(value = "skillName", help = "Skill Name") String skillName,
             @ShellOption(value = "description", help = "Description") String description) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Skill skill = skillRepository.findById(skillID).orElse(null);
 
         if (skill != null) {
             skill.setSkillName(skillName);
             skill.setDescription(description);
 
+            eventPublisher.publishRepositoryMethodEvent(this);
             skillRepository.save(skill);
             return "Skill updated successfully.";
         } else {
@@ -60,9 +68,11 @@ public class SkillDirectoryCLI {
 
     @ShellMethod(key = "delete-skill", value = "Delete a skill")
     public String deleteSkill(@ShellOption(value = "skillID", help = "Skill ID") int skillID) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Skill skill = skillRepository.findById(skillID).orElse(null);
 
         if (skill != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             skillRepository.delete(skill);
             return "Skill deleted successfully.";
         } else {

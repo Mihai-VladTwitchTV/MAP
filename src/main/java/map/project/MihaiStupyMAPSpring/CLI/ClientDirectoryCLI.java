@@ -1,6 +1,7 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -15,10 +16,14 @@ public class ClientDirectoryCLI {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-clients", value = "List all clients")
     public String listAllClients() {
         StringBuilder result = new StringBuilder("List of Clients:\n");
         Iterable<Client> clients = clientRepository.findAll();
+        eventPublisher.publishRepositoryMethodEvent(this);
         clients.forEach(client -> result.append(client.getClientID()).append(": ").append(client.getFirstName()).append(" ").append(client.getLastName()).append("\n"));
         return result.toString();
     }
@@ -26,18 +31,21 @@ public class ClientDirectoryCLI {
     @ShellMethod(key = "add-client", value = "Add a new client")
     public String addClient(@ShellOption({"-id", "--clientID"}) int clientID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber) {
         Client client = new Client(clientID, firstName, lastName, emailAddress, phoneNumber);
+        eventPublisher.publishRepositoryMethodEvent(this);
         clientRepository.save(client);
         return "Client added successfully.";
     }
 
     @ShellMethod(key = "update-client", value = "Update a client")
     public String updateClient(@ShellOption({"-id", "--clientID"}) int clientID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Client client = clientRepository.findById(clientID).orElse(null);
         if (client != null) {
             client.setFirstName(firstName);
             client.setLastName(lastName);
             client.setEmailAddress(emailAddress);
             client.setPhoneNumber(phoneNumber);
+            eventPublisher.publishRepositoryMethodEvent(this);
             clientRepository.save(client);
             return "Client updated successfully.";
         } else {
@@ -49,6 +57,7 @@ public class ClientDirectoryCLI {
     public String deleteClient(@ShellOption({"-id", "--clientID"}) int clientID) {
         Client client = clientRepository.findById(clientID).orElse(null);
         if (client != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             clientRepository.delete(client);
             return "Client deleted successfully.";
         } else {

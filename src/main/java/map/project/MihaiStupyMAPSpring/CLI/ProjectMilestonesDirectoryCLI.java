@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Project;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.ProjectMilestones;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectMilestonesRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class ProjectMilestonesDirectoryCLI {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-project-milestones", value = "List all project milestones")
     public String listAllProjectMilestones() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<ProjectMilestones> projectMilestones = projectMilestonesRepository.findAll();
         StringBuilder result = new StringBuilder("List of Project Milestones:\n");
         projectMilestones.forEach(milestone -> result.append(milestone.getMilestoneID()).append(": ").append(milestone.getMilestoneName()).append("\n"));
@@ -35,10 +40,12 @@ public class ProjectMilestonesDirectoryCLI {
             @ShellOption(value = "milestoneName", help = "Milestone Name") String milestoneName,
             @ShellOption(value = "description", help = "Description") String description) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Project project = projectRepository.findById(projectID).orElse(null);
 
         if (project != null) {
             ProjectMilestones milestone = new ProjectMilestones(milestoneID, project, milestoneName, description);
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectMilestonesRepository.save(milestone);
             return "Project milestone added successfully.";
         } else {
@@ -53,13 +60,16 @@ public class ProjectMilestonesDirectoryCLI {
             @ShellOption(value = "milestoneName", help = "Milestone Name") String milestoneName,
             @ShellOption(value = "description", help = "Description") String description) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         ProjectMilestones milestone = projectMilestonesRepository.findById(milestoneID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Project project = projectRepository.findById(projectID).orElse(null);
 
         if (milestone != null && project != null) {
             milestone.setProject(project);
             milestone.setMilestoneName(milestoneName);
             milestone.setDescription(description);
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectMilestonesRepository.save(milestone);
             return "Project milestone updated successfully.";
         } else {
@@ -69,9 +79,11 @@ public class ProjectMilestonesDirectoryCLI {
 
     @ShellMethod(key = "delete-project-milestone", value = "Delete a project milestone")
     public String deleteProjectMilestone(@ShellOption(value = "milestoneID", help = "Milestone ID") int milestoneID) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         ProjectMilestones milestone = projectMilestonesRepository.findById(milestoneID).orElse(null);
 
         if (milestone != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectMilestonesRepository.delete(milestone);
             return "Project milestone deleted successfully.";
         } else {

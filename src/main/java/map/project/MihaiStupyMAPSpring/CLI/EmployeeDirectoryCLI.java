@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,14 @@ public class EmployeeDirectoryCLI {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-employees", value = "List all employees")
     public String listAllEmployees() {
         StringBuilder result = new StringBuilder("List of Employees:\n");
         Iterable<Employee> employees = employeeRepository.findAll();
+        eventPublisher.publishRepositoryMethodEvent(this);
         employees.forEach(employee -> result.append(employee.getEmployeeID()).append(": ").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("\n"));
         return result.toString();
     }
@@ -37,6 +42,7 @@ public class EmployeeDirectoryCLI {
         Department department = departmentRepository.findById(departmentID);
         if (department != null) {
             Employee employee = new Employee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+            eventPublisher.publishRepositoryMethodEvent(this);
             employeeRepository.save(employee);
             return "Employee added successfully.";
         } else {
@@ -52,9 +58,11 @@ public class EmployeeDirectoryCLI {
             employee.setLastName(lastName);
             employee.setPhoneNumber(phoneNumber);
             employee.setEmailAddress(emailAddress);
+            eventPublisher.publishRepositoryMethodEvent(this);
             Department department = departmentRepository.findById(departmentID);
             if (department != null) {
                 employee.setDepartment(department);
+                eventPublisher.publishRepositoryMethodEvent(this);
                 employeeRepository.save(employee);
                 return "Employee updated successfully.";
             } else {
@@ -69,6 +77,7 @@ public class EmployeeDirectoryCLI {
     public String deleteEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID) {
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
         if (employee != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             employeeRepository.delete(employee);
             return "Employee deleted successfully.";
         } else {

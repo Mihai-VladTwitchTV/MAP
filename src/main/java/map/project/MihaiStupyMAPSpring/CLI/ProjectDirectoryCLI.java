@@ -3,6 +3,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Project;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ClientRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
@@ -28,8 +29,12 @@ public class ProjectDirectoryCLI {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-projects", value = "List all projects")
     public String listAllProjects() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<Project> projects = projectRepository.findAll();
         StringBuilder result = new StringBuilder("List of Projects:\n");
         projects.forEach(project -> result.append(project.getProjectID()).append(": ").append(project.getProjectName()).append("\n"));
@@ -47,6 +52,7 @@ public class ProjectDirectoryCLI {
             @ShellOption(value = "status", help = "Status") String status,
             @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Client client = clientRepository.findById(clientID).orElse(null);
         Department department = departmentRepository.findById(departmentID);
 
@@ -55,6 +61,7 @@ public class ProjectDirectoryCLI {
             Date endDate = parseDate(endDateStr);
 
             Project project = new Project(projectID, client, department, projectName, startDate, endDate, status, meetingType, null, null, null);
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectRepository.save(project);
 
             return "Project added successfully.";
@@ -74,8 +81,11 @@ public class ProjectDirectoryCLI {
             @ShellOption(value = "status", help = "Status") String status,
             @ShellOption(value = "meetingType", help = "Meeting Type") String meetingType) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Project project = projectRepository.findById(projectID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Client client = clientRepository.findById(clientID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Department department = departmentRepository.findById(departmentID);
 
         if (project != null && client != null && department != null) {
@@ -91,6 +101,7 @@ public class ProjectDirectoryCLI {
             project.setStatus(status);
             project.setMeetingType(meetingType);
 
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectRepository.save(project);
             return "Project updated successfully.";
         } else {
@@ -100,9 +111,11 @@ public class ProjectDirectoryCLI {
 
     @ShellMethod(key = "delete-project", value = "Delete a project")
     public String deleteProject(@ShellOption(value = "projectID", help = "Project ID") int projectID) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Project project = projectRepository.findById(projectID).orElse(null);
 
         if (project != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectRepository.delete(project);
             return "Project deleted successfully.";
         } else {

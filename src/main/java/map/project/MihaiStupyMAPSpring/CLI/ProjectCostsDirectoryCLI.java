@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Project;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.ProjectCosts;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectCostsRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,12 @@ public class ProjectCostsDirectoryCLI {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-project-costs", value = "List project costs")
     public String listProjectCosts() {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<ProjectCosts> projectCosts = projectCostsRepository.findAll();
         StringBuilder result = new StringBuilder("List of Project Costs:\n");
         projectCosts.forEach(projectCost -> result.append("Cost ID: ").append(projectCost.getCostID())
@@ -46,6 +51,7 @@ public class ProjectCostsDirectoryCLI {
             @ShellOption(value = "amount", help = "Amount") BigDecimal amount,
             @ShellOption(value = "dueDate", help = "Due Date (yyyy-MM-dd)") String dueDateString) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Project project = projectRepository.findById(projectID).orElse(null);
 
         if (project != null) {
@@ -58,6 +64,7 @@ public class ProjectCostsDirectoryCLI {
             projectCost.setAmount(amount);
             projectCost.setDueDate(dueDate);
 
+            eventPublisher.publishRepositoryMethodEvent(this);
             projectCostsRepository.save(projectCost);
 
             return "Project cost added successfully.";

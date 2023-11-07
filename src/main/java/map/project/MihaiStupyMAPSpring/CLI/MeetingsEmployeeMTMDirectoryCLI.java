@@ -4,6 +4,7 @@ import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Meetings;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.MeetingsEmployee;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.MeetingsEmployeeId;
+import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.MeetingsEmployeeRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.MeetingsRepository;
@@ -26,11 +27,16 @@ public class MeetingsEmployeeMTMDirectoryCLI {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private RepositoryMethodEventPublisher eventPublisher;
+
     @ShellMethod(key = "list-meeting-attendees", value = "List meeting attendees")
     public String listMeetingAttendees(@ShellOption(value = "meetingID", help = "Meeting ID") int meetingID) {
+        eventPublisher.publishRepositoryMethodEvent(this);
         Meetings meeting = meetingsRepository.findById(meetingID).orElse(null);
 
         if (meeting != null) {
+            eventPublisher.publishRepositoryMethodEvent(this);
             Iterable<MeetingsEmployee> meetingAttendees = meetingsEmployeeRepository.findAllByMeeting(meeting);
             StringBuilder result = new StringBuilder("Attendees of Meeting " + meetingID + ":\n");
             meetingAttendees.forEach(meetingEmployee -> {
@@ -49,7 +55,9 @@ public class MeetingsEmployeeMTMDirectoryCLI {
             @ShellOption(value = "meetingID", help = "Meeting ID") int meetingID,
             @ShellOption(value = "employeeID", help = "Employee ID") int employeeID) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Meetings meeting = meetingsRepository.findById(meetingID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
 
         if (meeting != null && employee != null) {
@@ -60,6 +68,7 @@ public class MeetingsEmployeeMTMDirectoryCLI {
             meetingsEmployee.setEmployee(employee);
             meetingsEmployee.setAttendanceStatus("Present");
 
+            eventPublisher.publishRepositoryMethodEvent(this);
             meetingsEmployeeRepository.save(meetingsEmployee);
             return "Employee added to the meeting.";
         } else {
@@ -72,11 +81,14 @@ public class MeetingsEmployeeMTMDirectoryCLI {
             @ShellOption(value = "meetingID", help = "Meeting ID") int meetingID,
             @ShellOption(value = "employeeID", help = "Employee ID") int employeeID) {
 
+        eventPublisher.publishRepositoryMethodEvent(this);
         Meetings meeting = meetingsRepository.findById(meetingID).orElse(null);
+        eventPublisher.publishRepositoryMethodEvent(this);
         Employee employee = employeeRepository.findById(employeeID).orElse(null);
 
         if (meeting != null && employee != null) {
             MeetingsEmployeeId id = new MeetingsEmployeeId(meetingID, employeeID);
+            eventPublisher.publishRepositoryMethodEvent(this);
             meetingsEmployeeRepository.deleteById(id);
             return "Employee removed from the meeting.";
         } else {
