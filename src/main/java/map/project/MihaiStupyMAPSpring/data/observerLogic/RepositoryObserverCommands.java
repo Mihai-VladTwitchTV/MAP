@@ -16,5 +16,10 @@ public class RepositoryObserverCommands {
             System.out.println(event);
         }
     }
+
+    @ShellMethod(key="observer-clear-events",value = "Observer clear events")
+    public void clearObservedEvents() {
+        observer.clearEvents();
+    }
 }
 

@@ -23,5 +23,9 @@ public class RepositoryObserver {
     public List<String> getObservedEvents() {
         return observedEvents;
     }
+
+    public void clearEvents(){
+        this.observedEvents = new ArrayList<String>();
+    }
 }
 
