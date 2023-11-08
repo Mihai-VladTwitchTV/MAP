@@ -33,7 +33,6 @@ public class SkillDirectoryCLITest {
     @Mock
     private Shell shell;
 
-
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
