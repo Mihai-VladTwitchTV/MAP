@@ -1,7 +1,6 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
-import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,14 +19,10 @@ public class DepartmentDirectoryCLI {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    @Autowired
-    private RepositoryMethodEventPublisher eventPublisher;
-
     @ShellMethod(key = "list-departments", value = "List all departments")
     public String listAllDepartments() {
         StringBuilder result = new StringBuilder("List of Departments:\n");
         Iterable<Department> departments = departmentRepository.findAll();
-        eventPublisher.publishRepositoryMethodEvent(this);
         departments.forEach(department -> result.append(department.getDepartmentID()).append(": ").append(department.getSpecialization()).append("\n"));
         return result.toString();
     }
@@ -35,19 +30,16 @@ public class DepartmentDirectoryCLI {
     @ShellMethod(key = "add-department", value = "Add a new department")
     public String addDepartment(@ShellOption({"-id", "--departmentID"}) int departmentID, @ShellOption({"-max", "--maxEmployees"}) int maxEmployees, @ShellOption({"-spec", "--specialization"}) String specialization) {
         Department department = new Department(departmentID, maxEmployees, specialization);
-        eventPublisher.publishRepositoryMethodEvent(this);
         departmentRepository.save(department);
         return "Department added successfully.";
     }
 
     @ShellMethod(key = "update-department", value = "Update a department")
     public String updateDepartment(@ShellOption({"-id", "--departmentID"}) int departmentID, @ShellOption({"-max", "--maxEmployees"}) int maxEmployees, @ShellOption({"-spec", "--specialization"}) String specialization) {
-        eventPublisher.publishRepositoryMethodEvent(this);
         Department department = departmentRepository.findById(departmentID);
         if (department != null) {
             department.setMaxEmployees(maxEmployees);
             department.setSpecialization(specialization);
-            eventPublisher.publishRepositoryMethodEvent(this);
             departmentRepository.save(department);
             return "Department with ID " + departmentID + " updated successfully.";
         } else {
@@ -60,7 +52,6 @@ public class DepartmentDirectoryCLI {
     public String deleteDepartment(@ShellOption({"-id", "--departmentID"}) int departmentID) {
         Department department = departmentRepository.findById(departmentID);
         if (department != null) {
-            eventPublisher.publishRepositoryMethodEvent(this);
             departmentRepository.delete(department);
             return "Department deleted successfully.";
         } else {

@@ -63,12 +63,12 @@ public class SkillDirectoryCLITest {
         String result = skillDirectoryCLI.addSkill(1, "Java", "Programming Language");
         assertEquals("Skill added successfully.", result);
 
-        skill.setSpecialization("IT");
-        skill.setMaxEmployees(20);
-        int maxEmployees = department.getMaxEmployees();
-        String specialization = department.getSpecialization();
-        assertEquals(maxEmployees,20);
-        assertEquals(specialization,"IT");
+        skill.setSkillName("IT");
+        skill.setSkillID(20);
+        int id = skill.getSkillID();
+        String name= skill.getSkillName();
+        assertEquals(id,20);
+        assertEquals(name,"IT");
     }
 
 }
