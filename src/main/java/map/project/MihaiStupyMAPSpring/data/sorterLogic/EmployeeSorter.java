@@ -1,7 +1,7 @@
 package map.project.MihaiStupyMAPSpring.data.sorterLogic;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
-import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
+import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,18 +12,18 @@ import java.util.List;
 import static org.springframework.util.CollectionUtils.toArray;
 
 @Component
-public class DepartmentSorter implements Sorter{///Strategy Pattern
+public class EmployeeSorter implements Sorter{///Strategy Pattern
 
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private EmployeeRepository employeeRepository;
 
 
     @Override
     public void getSortedRepo() {
-        List<Department> tempList = new ArrayList<>();
+        List<Employee> tempList = new ArrayList<>();
         int index = 0;
-        tempList =departmentRepository.findAll();
+        tempList =employeeRepository.findAll();
 
         int n = tempList.size();
         boolean swapped;
@@ -40,10 +40,12 @@ public class DepartmentSorter implements Sorter{///Strategy Pattern
                 break;
             }
         }
-        for(Department dep : tempList){
-            System.out.println("Department ID: "+dep.getDepartmentID());
-            System.out.println("Max Employees: "+dep.getMaxEmployees());
-            System.out.println("Specialization: "+dep.getSpecialization());
+        for(Employee emp : tempList){
+            System.out.println("Employee ID: "+emp.getEmployeeID());
+            System.out.println("Full Name: "+emp.getFirstName()+" "+emp.getLastName());
+            System.out.println("Department ID: "+emp.getDepartment().getDepartmentID());
+            System.out.println("Email Address: "+emp.getEmailAddress());
+            System.out.println("Phone Number: "+emp.getPhoneNumber());
             System.out.println("");
         }
     }

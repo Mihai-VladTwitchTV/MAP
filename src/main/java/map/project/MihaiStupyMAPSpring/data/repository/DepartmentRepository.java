@@ -10,8 +10,8 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
 
     Department findById(int departmentID);
 
-    Department createDepartment(Department department);
+//   Department createDepartment(Department department);
 
-    Department updateDepartment(int departmentId, Department updatedDepartment);
+//    Department updateDepartment(int departmentId, Department updatedDepartment);
 }
 
