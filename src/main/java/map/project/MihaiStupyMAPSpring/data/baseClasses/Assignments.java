@@ -20,12 +20,19 @@ public class Assignments {
     @Setter
     @Getter
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Setter
     @Getter
     @Column(name = "assignmentName", nullable = false)
     private String assignmentName;
+
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
 
     // Constructors, getters, setters, and other fields as needed.
 }

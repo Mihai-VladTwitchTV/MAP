@@ -23,6 +23,9 @@ public class DepartmentDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    public DepartmentDirectoryCLI(DepartmentRepository departmentRepository) {
+    }
+
     @ShellMethod(key = "list-departments", value = "List all departments")
     public String listAllDepartments() {
         StringBuilder result = new StringBuilder("List of Departments:\n");
