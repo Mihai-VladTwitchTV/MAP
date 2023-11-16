@@ -32,6 +32,7 @@ public class Department {
     private int maxEmployees;
     @Column(name = "specialization")
     private String specialization;
+
 //    @Getter
 //    @Setter
 //    @OneToOne

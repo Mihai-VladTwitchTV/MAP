@@ -10,6 +10,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "Employee")
 public class Employee {
     public Employee() {
@@ -23,9 +25,11 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.department = department;
+        this.type=null;
     }///detailed constructor used for initialization
 
     boolean isFullTime,isPartTime,isDepartmentLeader = false;
+
 
     @Setter
     @Getter
@@ -33,6 +37,14 @@ public class Employee {
 //    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "employeeID")
     private int employeeID;
+
+
+    @Setter
+    @Getter
+//    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "type")
+    private String type;
+
 
     @Setter
     @Getter

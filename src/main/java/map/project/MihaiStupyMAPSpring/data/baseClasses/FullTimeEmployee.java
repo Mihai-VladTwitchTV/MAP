@@ -1,23 +1,23 @@
-//package map.project.MihaiStupyMAPSpring.data.baseClasses;
-//
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.Table;
-//import lombok.Data;
-//@Data
-//@Entity
-//@Table(name = "FullTimeEmployee")
-////Test daca merge sa dau pull de la Stupy
-//public class FullTimeEmployee extends Employee implements fulltime{
-//    public FullTimeEmployee() {
-//    }
-//
-//    public FullTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
-//        super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-//        isFullTime = true;
-//    }
-//
-//    @Override
-//    public void setIsFullTime(boolean yn) {
-//        isFullTime = yn;
-//    }
-//}
+package map.project.MihaiStupyMAPSpring.data.baseClasses;
+
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
+@DiscriminatorValue("FULL_TIME")
+public class FullTimeEmployee extends Employee implements FullTime {
+    public FullTimeEmployee() {
+        setType("FULL_TIME");
+    }
+
+    public FullTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
+        super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+        setType("FULL_TIME");
+    }
+
+    @Override
+    public void setFullTime(boolean isFullTime) {
+        this.isFullTime = isFullTime;
+    }
+}

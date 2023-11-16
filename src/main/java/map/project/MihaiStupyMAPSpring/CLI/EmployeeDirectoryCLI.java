@@ -1,7 +1,6 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Employee;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.*;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
@@ -28,27 +27,70 @@ public class EmployeeDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    private String determineEmployeeRole(Employee employee) {
+        if (employee instanceof FullTimeEmployee) {
+            return "Full-Time";
+        } else if (employee instanceof LeadEmployee) {
+            return "Lead";
+        } else if (employee instanceof PartTimeEmployee) {
+            return "Part-Time";
+        } else {
+            return "Unknown";
+        }
+    }
+
     @ShellMethod(key = "list-employees", value = "List all employees")
     public String listAllEmployees() {
         StringBuilder result = new StringBuilder("List of Employees:\n");
         Iterable<Employee> employees = employeeRepository.findAll();
         eventPublisher.publishRepositoryMethodEvent(this);
-        employees.forEach(employee -> result.append(employee.getEmployeeID()).append(": ").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("\n"));
+
+        employees.forEach(employee -> {
+            String role = determineEmployeeRole(employee);
+            result.append(employee.getEmployeeID()).append(": ")
+                    .append(employee.getFirstName()).append(" ").append(employee.getLastName())
+                    .append(" (Role: ").append(role).append(", ")
+                    .append("Department: ").append(employee.getDepartment().getSpecialization()).append(')')
+                    .append("\n");
+        });
+
         return result.toString();
     }
 
+
     @ShellMethod(key = "add-employee", value = "Add a new employee")
-    public String addEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-dept", "--department"}) int departmentID) {
+    public String addEmployee(
+            @ShellOption({"-id", "--employeeID"}) int employeeID,
+            @ShellOption({"-first", "--firstName"}) String firstName,
+            @ShellOption({"-last", "--lastName"}) String lastName,
+            @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber,
+            @ShellOption({"-email", "--emailAddress"}) String emailAddress,
+            @ShellOption({"-dept", "--department"}) int departmentID,
+            @ShellOption({"-type", "--employeeType"}) String employeeType) {
+
         Department department = departmentRepository.findById(departmentID);
         if (department != null) {
-            Employee employee = new Employee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-            eventPublisher.publishRepositoryMethodEvent(this);
-            employeeRepository.save(employee);
-            return "Employee added successfully.";
+            switch (employeeType.toLowerCase()) {
+                case "full-time":
+                    FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+                    employeeRepository.save(fullTimeEmployee);
+                    return "FullTimeEmployee added successfully.";
+                case "lead":
+                    LeadEmployee leadEmployee = new LeadEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+                    employeeRepository.save(leadEmployee);
+                    return "LeadEmployee added successfully.";
+                case "part-time":
+                    PartTimeEmployee partTimeEmployee = new PartTimeEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
+                    employeeRepository.save(partTimeEmployee);
+                    return "PartTimeEmployee added successfully.";
+                default:
+                    return "Unknown employee type.";
+            }
         } else {
             return "Department not found.";
         }
     }
+
 
     @ShellMethod(key = "update-employee", value = "Update an employee")
     public String updateEmployee(@ShellOption({"-id", "--employeeID"}) int employeeID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-dept", "--department"}) int departmentID) {
