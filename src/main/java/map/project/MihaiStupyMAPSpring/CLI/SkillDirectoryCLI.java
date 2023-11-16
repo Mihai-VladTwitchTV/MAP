@@ -39,8 +39,8 @@ public class SkillDirectoryCLI {
         skill.setSkillName(skillName);
         skill.setDescription(description);
 
-        eventPublisher.publishRepositoryMethodEvent(this);
         skillRepository.save(skill);
+        eventPublisher.publishRepositoryMethodEvent(this);
 
         return "Skill added successfully.";
     }
