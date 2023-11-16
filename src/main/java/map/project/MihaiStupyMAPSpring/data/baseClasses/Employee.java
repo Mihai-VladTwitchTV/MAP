@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.util.Set;
 
-
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -15,36 +14,90 @@ import java.util.Set;
 @Table(name = "Employee")
 public class Employee {
     public Employee() {
+    }
 
-    }///empty constructor used for database work
+    public static class EmployeeBuilder {
+        private int employeeID;
+        private String type;
+        private String firstName;
+        private String lastName;
+        private int phoneNumber;
+        private String emailAddress;
+        private Department department;
+        private boolean isFullTime;
+        private boolean isPartTime;
+        private boolean isLeader;
 
-    public Employee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
-        this.employeeID = employeeID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-        this.department = department;
-        this.type=null;
-    }///detailed constructor used for initialization
+        public EmployeeBuilder(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
+            this.employeeID = employeeID;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phoneNumber = phoneNumber;
+            this.emailAddress = emailAddress;
+            this.department = department;
+        }
 
-    boolean isFullTime,isPartTime,isDepartmentLeader = false;
+        public EmployeeBuilder type(String type) {
+            this.type = type;
+            return this;
+        }
 
+        public EmployeeBuilder isFullTime(boolean isFullTime) {
+            this.isFullTime = isFullTime;
+            return this;
+        }
+
+        public EmployeeBuilder isPartTime(boolean isPartTime) {
+            this.isPartTime = isPartTime;
+            return this;
+        }
+
+        public EmployeeBuilder isLeader(boolean isLeader) {
+            this.isLeader = isLeader;
+            return this;
+        }
+
+        public Employee build() {
+            Employee employee;
+
+            if (isFullTime) {
+                employee = new FullTimeEmployee();
+                ((FullTimeEmployee) employee).setIsFullTime(true);
+            } else if (isPartTime) {
+                employee = new PartTimeEmployee();
+                ((PartTimeEmployee) employee).setIsPartTime(true);
+            } else if (isLeader) {
+                employee = new LeadEmployee();
+                ((LeadEmployee) employee).setIsLeader(true);
+            } else {
+                employee = new Employee();
+            }
+
+            // Set common attributes
+            employee.setEmployeeID(employeeID);
+            employee.setFirstName(firstName);
+            employee.setLastName(lastName);
+            employee.setPhoneNumber(phoneNumber);
+            employee.setEmailAddress(emailAddress);
+            employee.setDepartment(department);
+            employee.setType(type);
+            employee.setSkills(null); // You may need to set skills and assignments accordingly
+            employee.setAssignments(null);
+
+            return employee;
+        }
+    }
 
     @Setter
     @Getter
     @Id
-//    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "employeeID")
     private int employeeID;
 
-
     @Setter
     @Getter
-//    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "type")
     private String type;
-
 
     @Setter
     @Getter
@@ -71,18 +124,62 @@ public class Employee {
     @JoinColumn(name = "departmentID")
     private Department department;
 
+    @Setter
+    @Getter
+    @Column(name = "isFullTime")
+    private boolean isFullTime;
 
-    public int getDepartmentID() {
-        return department.getDepartmentID();
-    }
+    @Setter
+    @Getter
+    @Column(name = "isPartTime")
+    private boolean isPartTime;
 
-    public void setDepartmentID(int departmentID) {
-        this.department.setDepartmentID(departmentID);
-    }
-
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "employee")
     private Set<EmployeeSkill> skills;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "employee")
     private Set<EmployeeProject> assignments;
 }
+
+//@Entity
+//@DiscriminatorValue("FULL_TIME")
+//class FullTimeEmployee extends Employee {
+//    @Setter
+//    @Getter
+//    @Column(name = "isFullTime")
+//    private boolean isFullTime;
+//
+//    public void setIsFullTime(boolean isFullTime) {
+//        this.isFullTime = isFullTime;
+//    }
+//}
+//
+//@Entity
+//@DiscriminatorValue("PART_TIME")
+//class PartTimeEmployee extends Employee {
+//    @Setter
+//    @Getter
+//    @Column(name = "isPartTime")
+//    private boolean isPartTime;
+//
+//    public void setIsPartTime(boolean isPartTime) {
+//        this.isPartTime = isPartTime;
+//    }
+//}
+//
+//@Entity
+//@DiscriminatorValue("LEADER")
+//class LeaderEmployee extends Employee {
+//    @Setter
+//    @Getter
+//    @Column(name = "isLeader")
+//    private boolean isLeader;
+//
+//    public void setIsLeader(boolean isLeader) {
+//        this.isLeader = isLeader;
+//    }
+//}

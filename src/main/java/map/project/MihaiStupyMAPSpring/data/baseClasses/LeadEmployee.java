@@ -1,23 +1,16 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-
+import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("LEAD")
-public class LeadEmployee extends Employee implements Lead {
-    public LeadEmployee() {
-        setType("LEAD");
-    }
+@DiscriminatorValue("LEADER")
+public class LeadEmployee extends Employee {
+    @Column(name = "isLeader")
+    private boolean isLeader;
 
-    public LeadEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
-        super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-        setType("LEAD");
-    }
+    // Additional fields and methods specific to LeaderEmployee can be added here
 
-    @Override
-    public void setLeader(boolean isLeader) {
-        this.isDepartmentLeader = isLeader;
+    public void setIsLeader(boolean isLeader) {
+        this.isLeader = isLeader;
     }
 }

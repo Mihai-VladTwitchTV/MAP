@@ -28,16 +28,19 @@ public class EmployeeDirectoryCLI {
     private RepositoryMethodEventPublisher eventPublisher;
 
     private String determineEmployeeRole(Employee employee) {
-        if (employee instanceof FullTimeEmployee) {
-            return "Full-Time";
-        } else if (employee instanceof LeadEmployee) {
-            return "Lead";
-        } else if (employee instanceof PartTimeEmployee) {
-            return "Part-Time";
-        } else {
-            return "Unknown";
+        if (employee.getType() != null) {
+            switch (employee.getType().toLowerCase()) {
+                case "full-time":
+                    return "Full-Time";
+                case "lead":
+                    return "Lead";
+                case "part-time":
+                    return "Part-Time";
+            }
         }
+        return "Unknown";
     }
+
 
     @ShellMethod(key = "list-employees", value = "List all employees")
     public String listAllEmployees() {
@@ -58,6 +61,7 @@ public class EmployeeDirectoryCLI {
     }
 
 
+
     @ShellMethod(key = "add-employee", value = "Add a new employee")
     public String addEmployee(
             @ShellOption({"-id", "--employeeID"}) int employeeID,
@@ -70,26 +74,37 @@ public class EmployeeDirectoryCLI {
 
         Department department = departmentRepository.findById(departmentID);
         if (department != null) {
+            Employee employee;
+
             switch (employeeType.toLowerCase()) {
                 case "full-time":
-                    FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-                    employeeRepository.save(fullTimeEmployee);
-                    return "FullTimeEmployee added successfully.";
+                    employee = new Employee.EmployeeBuilder(employeeID, firstName, lastName, phoneNumber, emailAddress, department)
+                            .type("full-time")
+                            .isFullTime(true)
+                            .build();
+                    break;
                 case "lead":
-                    LeadEmployee leadEmployee = new LeadEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-                    employeeRepository.save(leadEmployee);
-                    return "LeadEmployee added successfully.";
+                    employee = new Employee.EmployeeBuilder(employeeID, firstName, lastName, phoneNumber, emailAddress, department)
+                            .type("lead")
+                            .isLeader(true)
+                            .build();
+                    break;
                 case "part-time":
-                    PartTimeEmployee partTimeEmployee = new PartTimeEmployee(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-                    employeeRepository.save(partTimeEmployee);
-                    return "PartTimeEmployee added successfully.";
+                    employee = new Employee.EmployeeBuilder(employeeID, firstName, lastName, phoneNumber, emailAddress, department)
+                            .type("part-time")
+                            .build();
+                    break;
                 default:
                     return "Unknown employee type.";
             }
+
+            employeeRepository.save(employee);
+            return "Employee added successfully.";
         } else {
             return "Department not found.";
         }
     }
+
 
 
     @ShellMethod(key = "update-employee", value = "Update an employee")

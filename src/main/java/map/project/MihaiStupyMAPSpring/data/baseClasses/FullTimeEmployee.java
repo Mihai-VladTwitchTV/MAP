@@ -1,23 +1,16 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-
+import jakarta.persistence.*;
 
 @Entity
 @DiscriminatorValue("FULL_TIME")
-public class FullTimeEmployee extends Employee implements FullTime {
-    public FullTimeEmployee() {
-        setType("FULL_TIME");
-    }
+public class FullTimeEmployee extends Employee {
+    @Column(name = "isFullTime")
+    private boolean isFullTime;
 
-    public FullTimeEmployee(int employeeID, String firstName, String lastName, int phoneNumber, String emailAddress, Department department) {
-        super(employeeID, firstName, lastName, phoneNumber, emailAddress, department);
-        setType("FULL_TIME");
-    }
+    // Additional fields and methods specific to FullTimeEmployee can be added here
 
-    @Override
-    public void setFullTime(boolean isFullTime) {
+    public void setIsFullTime(boolean isFullTime) {
         this.isFullTime = isFullTime;
     }
 }
