@@ -5,6 +5,7 @@ import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.service.DepartmentService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -16,7 +17,7 @@ public class DepartmentServiceTest {
 
     @Mock
     private DepartmentRepository departmentRepository;
-
+    @InjectMocks
     private DepartmentService departmentService;
 
     @Before

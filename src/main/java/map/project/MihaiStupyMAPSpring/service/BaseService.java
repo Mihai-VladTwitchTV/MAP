@@ -1,6 +1,5 @@
 package map.project.MihaiStupyMAPSpring.service;
 
-import map.project.MihaiStupyMAPSpring.data.repository.AssignmentsRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,6 +9,10 @@ public abstract class BaseService<T, ID> {
 
     public BaseService(JpaRepository repository) {
         this.repository = (JpaRepository<T, ID>) repository;
+    }
+
+    protected JpaRepository<T, ID> getRepository() {
+        return repository;
     }
 
     public T save(T entity) {
@@ -26,4 +29,3 @@ public abstract class BaseService<T, ID> {
 
     // Add more template methods here
 }
-

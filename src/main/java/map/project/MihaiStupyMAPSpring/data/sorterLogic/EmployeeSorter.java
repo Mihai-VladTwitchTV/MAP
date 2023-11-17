@@ -30,7 +30,7 @@ public class EmployeeSorter implements Sorter{///Strategy Pattern
         for (int i = 0; i < n - 1; i++) {
             swapped = false;
             for (int j = 0; j < n - i - 1; j++) {
-                if (tempList.get(j).getDepartmentID() > tempList.get(j+1).getDepartmentID()) {
+                if (tempList.get(j).getDepartment().getDepartmentID() > tempList.get(j+1).getDepartment().getDepartmentID()) {
                     // Swap arr[j] and arr[j+1]
                     Collections.swap(tempList,j,j+1);
                     swapped = true;

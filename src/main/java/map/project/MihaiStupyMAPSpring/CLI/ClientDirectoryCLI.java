@@ -1,8 +1,11 @@
 package map.project.MihaiStupyMAPSpring.CLI;
 
+import map.project.MihaiStupyMAPSpring.data.baseClasses.Assignments;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
+import map.project.MihaiStupyMAPSpring.data.repository.AssignmentsRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ClientRepository;
+import map.project.MihaiStupyMAPSpring.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -17,7 +20,13 @@ public class ClientDirectoryCLI {
     private ClientRepository clientRepository;
 
     @Autowired
+    private ClientService clientService;
+
+    @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
+
+    @Autowired
+    private AssignmentsRepository assignmentsRepository;
 
     @ShellMethod(key = "list-clients", value = "List all clients")
     public String listAllClients() {
@@ -29,12 +38,24 @@ public class ClientDirectoryCLI {
     }
 
     @ShellMethod(key = "add-client", value = "Add a new client")
-    public String addClient(@ShellOption({"-id", "--clientID"}) int clientID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber) {
+    public String addClient(
+            @ShellOption({"-id", "--clientID"}) int clientID,
+            @ShellOption({"-first", "--firstName"}) String firstName,
+            @ShellOption({"-last", "--lastName"}) String lastName,
+            @ShellOption({"-email", "--emailAddress"}) String emailAddress,
+            @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber,
+            @ShellOption({"-assignment", "--assignmentName"}) String assignmentName) {
+
         Client client = new Client(clientID, firstName, lastName, emailAddress, phoneNumber);
+
         eventPublisher.publishRepositoryMethodEvent(this);
-        clientRepository.save(client);
-        return "Client added successfully.";
+        clientService.saveWithAssignments(assignmentName, client);
+
+        return "Client added successfully with assignment: " + assignmentName + ".";
     }
+
+
+
 
     @ShellMethod(key = "update-client", value = "Update a client")
     public String updateClient(@ShellOption({"-id", "--clientID"}) int clientID, @ShellOption({"-first", "--firstName"}) String firstName, @ShellOption({"-last", "--lastName"}) String lastName, @ShellOption({"-email", "--emailAddress"}) String emailAddress, @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber) {
@@ -64,4 +85,5 @@ public class ClientDirectoryCLI {
             return "Client not found.";
         }
     }
+
 }

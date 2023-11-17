@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.data.repository;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Assignments;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 @Repository
