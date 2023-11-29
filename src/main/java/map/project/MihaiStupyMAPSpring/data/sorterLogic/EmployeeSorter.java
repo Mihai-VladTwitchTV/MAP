@@ -20,19 +20,17 @@ public class EmployeeSorter implements Sorter{///Strategy Pattern
 
 
     @Override
-    public void getSortedRepo() {
-        List<Employee> tempList = new ArrayList<>();
-        int index = 0;
-        tempList =employeeRepository.findAll();
+    public List<Employee> getSortedRepo() {
+        List<Employee> tempList = new ArrayList<>(employeeRepository.findAll());
 
         int n = tempList.size();
         boolean swapped;
         for (int i = 0; i < n - 1; i++) {
             swapped = false;
             for (int j = 0; j < n - i - 1; j++) {
-                if (tempList.get(j).getDepartment().getDepartmentID() > tempList.get(j+1).getDepartment().getDepartmentID()) {
+                if (tempList.get(j).getEmployeeID() > tempList.get(j + 1).getEmployeeID()) {
                     // Swap arr[j] and arr[j+1]
-                    Collections.swap(tempList,j,j+1);
+                    Collections.swap(tempList, j, j + 1);
                     swapped = true;
                 }
             }
@@ -40,13 +38,6 @@ public class EmployeeSorter implements Sorter{///Strategy Pattern
                 break;
             }
         }
-        for(Employee emp : tempList){
-            System.out.println("Employee ID: "+emp.getEmployeeID());
-            System.out.println("Full Name: "+emp.getFirstName()+" "+emp.getLastName());
-            System.out.println("Department ID: "+emp.getDepartment().getDepartmentID());
-            System.out.println("Email Address: "+emp.getEmailAddress());
-            System.out.println("Phone Number: "+emp.getPhoneNumber());
-            System.out.println("");
-        }
+        return tempList;
     }
 }

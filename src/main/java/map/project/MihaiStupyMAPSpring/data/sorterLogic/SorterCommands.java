@@ -26,7 +26,7 @@ public class SorterCommands {
 
     @ShellMethod(key="get-sorted",value="Get sorted Entities")
     public void getSortedEntities(){
-        sorter.getSortedRepo();
+        System.out.println(sorter.getSortedRepo());
     }
 
     @ShellMethod(key = "pick-sorter", value = "Pick sorter")
