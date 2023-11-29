@@ -1,0 +1,255 @@
+1699006481136:list-clients
+1699006488721:list all clients
+1699006495224:add-client
+1699006503450:update-client
+1699006512954:list-assignments
+1699006626750:add-employee
+1699006697031:add-department
+1699006952866:shell:>add-department --departmentID 123 --maxEmployees 50 --specialization "Example"
+1699006982400:add-department --departmentID 101 --maxEmployees 50 --specialization "IT"
+1699006994504:list-departments
+1699007060901:add-employee
+1699007161263:add-employee --department 101 --firstname Stupariu --lastName Bogdan -employeeID 10 -phoneNumber 0775355032 -emailAddres
+1699007171313:add-employee --department 101 --firstname Stupariu --lastName Bogdan -employeeID 10 -phoneNumber 0775355032 -emailAddres stupariubogdan@gmail.com
+1699007205229:add-employee --department 101 --firstname Grae --lastName Bogdan -employeeID 11 -phoneNumber 0775355044 -emailAddres stupariubogda__n@gmail.com
+1699007233111:list-employees
+1699007247555:add-employee
+1699007348983:add-employee --department 101 --firstname Bogdan -employeeID 12 -lastName Stupariu --phoneNumber 0775355032 -emailAddress stupariubogdan@gmail.com
+1699007377761:add-employee --department 101 --firstName Bogdan --employeeID 12 --lastName Stupariu --phoneNumber 0775355032 --emailAddress stupariubogdan@gmail.com
+1699007399447:list-departments
+1699007410876:update-departments
+1699007423590:update-department
+1699007483413:update-department --departmentID 123 --maxEmployees 50 --specialization "IT AGAIN"
+1699007499937:update-department --departmentID 101 --maxEmployees 50 --specialization "IT AGAIN"
+1699007507440:update-department --departmentID 100 --maxEmployees 50 --specialization "NewSpecialization"
+1699007625838:add-department
+1699007651509:add-department --departmentID 100 --maxEmployees 15 --specialization IT
+1699007656520:list-departments
+1699007662684:add-employee
+1699007940890:add-department
+1699007960337:add-department --departmentID 100 --maxEmployees 15 --specialization IT
+1699007964639:list-departments
+1699007968208:add-employee
+1699007975892:add-employee  --firstName Stupariu  --lastName Bogdan  --emailAddress stupariubogdan@gmail.com  --phoneNumber 0775355032  --employeeID 1   --department 100
+1699008093642:list-employees
+1699008111229:add-department
+1699008135130:add-department --maxEmployees 15 --departmentID 10 --specialization IT
+1699008139653:list-department
+1699008164016:list-departments
+1699008194284:add-department --maxEmployees 15 --departmentID 11 --specialization HR
+1699008197162:list-departments
+1699008208117:list-skills
+1699008214133:add-skill
+1699008250206:add-skill -skillName C++ --description CodingSkills -skillID 100
+1699008318946:add-skill --skillName C++ --description CodingSkills --skillID 100
+1699008352775:list-skills
+1699008396614:add-skill --skillName Java --description WebCoding --skillID 101
+1699008399347:list-skills
+1699008935453:add-department
+1699009465590:add-department --maxEmployees --departmentID 100 --specialization IT
+1699009490119:add-department --maxEmployees 15 --departmentID 100 --specialization IT
+1699009496589:add-department --maxEmployees 15 --departmentID 100 --specialization HR
+1699009501446:list-departments
+1699009507816:update-department
+1699009551718:update-department --departmentID 100 --maxEmployees 15 --specialization TRAG
+1699009566601:list-departments
+1699009623390:add-skill
+1699009846091:public class DepartmentService {
+1699009873260:add-department --maxEmployees 15 --departmentID 100 --specialization IT
+1699009882472:update-department --departmentID 100 --maxEmployees 15 --specialization TRAG
+1699009926391:add-skill --skillName C++ --description CodingSkills --skillID 100
+1699009932586:add-skill --skillName WebCoding --description CodingSkills --skillID 100
+1699009934857:list-skills
+1699009940637:update-skill
+1699009967129:update-skill --skillID 100 --description plm --skillName Ceva
+1699010015634:add-meeting
+1699010260226:add-department
+1699010276839:add-department --departmentID 100 --maxEmployees 15 --specialization IT
+1699010280627:list-departments
+1699010290714:update-department
+1699010319305:update-department --departmentID 100 --specialization HR --maxEmployees 20
+1699010394296:add-department --departmentID 100 --maxEmployees 15 --specialization IT
+1699010401689:delete-department
+1699010419310:delete-department --departmentID 100
+1699010777268:add-department IT -maxEmployees 15 1
+1699010784096:add-department
+1699010791372:add-department 1 IT 15
+1699010810926:add-department --departmentID 100 --maxEmployees 15 --specialization IT
+1699010821779:add-department --departmentID 101 --maxEmployees 15 --specialization HR
+1699010825365:list-departments
+1699010836406:add-department --departmentID 100 --maxEmployees 15 --specialization Test
+1699010841688:list-departments
+1699010846735:add-employee
+1699010964612:add-employee --department 101 --firstname Grae --lastName Bogdan -employeeID 11 -phoneNumber 0775355044 -emailAddres stupariubogda__n@gmail.com
+1699010983315:add-employee --department 101 --firstname Grae --lastName Bogdan --employeeID 11 --phoneNumber 0775355044 --emailAddres stupariubogda__n@gmail.com
+1699011030891:add-employee --department 101 --firstName Grae --lastName Bogdan --employeeID 11 --phoneNumber 0775355044 --emailAddress stupariubogda__n@gmail.com
+1699011036150:list-employees
+1699011049321:update-client
+1699011088737:update-client --clientID 123 --firstName John --lastName Doe --emailAddress john.doe@example.com --phoneNumber 1234567890
+1699011101964:update-employee --clientID 11 --firstName John --lastName Doe --emailAddress john.doe@example.com --phoneNumber 1234567890
+1699011134819:update-employee --employeeID 11 --firstName John --lastName Doe --emailAddress john.doe@example.com --phoneNumber 1234567890 --department 101
+1699011141047:list-employees
+1700058317857:add-client
+1700058367796:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700058372381:list-clients
+1700058376232:list-assignments
+1700058393546:add-client --clientID 2 --firstName Stupariu --lastName Bogdan --assignmentName Belire2 --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700058397349:list-assignments
+1700058405608:list-clients
+1700058423251:add-client --clientID 3 --firstName Stuu --lastName Bo --assignmentName Belire24 --emailAddress stiu@gmail --phoneNumber 0775032
+1700058427669:list-clients
+1700058433521:list-assignments
+1700058751870:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700058769147:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 0775355032
+1700058772292:list-clients
+1700058779438:list-assingments
+1700058793967:list-assignments
+1700058848871:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700058856851:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700058860210:list-clients
+1700058864132:list-assignments
+1700058952089:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700058956789:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700058960327:list-assignments
+1700059005476:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700059015555:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700059076405:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700059084977:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700059100223:list-assignments
+1700059419930:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700059428868:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700059503980:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700059508932:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700059514154:list-assignments
+1700059519369:list-clients
+1700059676777:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700059681854:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700059686570:list-assingments
+1700059690962:list-assignments
+1700060273963:add-department
+1700060292606:add-department --specialization IT --maxEmployees 15 -departmentID 1
+1700060299757:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700060303669:list-employees
+1700060306595:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700060309147:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 2 --employeeType lead
+1700060319179:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700060323736:add-employee --employeeID 3 --firstName Bob --lastName Johnson --phoneNumber 555555555 --emailAddress bob.johnson@example.com --department 3 --employeeType parttime
+1700060332787:add-employee --employeeID 3 --firstName Bob --lastName Johnson --phoneNumber 555555555 --emailAddress bob.johnson@example.com --department 1 --employeeType parttime
+1700060335187:list-employees
+1700060519772:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700060525876:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700060529308:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700060535815:add-employee --employeeID 3 --firstName Bob --lastName Johnson --phoneNumber 555555555 --emailAddress bob.johnson@example.com --department 1 --employeeType parttime
+1700060538955:list-employees
+1700061345185:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700061349249:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700061918011:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700061922104:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700061926702:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700062115837:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700062119272:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700062123069:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700120996732:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700121002830:add-employee --employeeID 1 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType fulltime
+1700121008531:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700121036009:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700121045411:add-employee --employeeID 102 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 2 --employeeType part-time
+1700121055346:add-employee --employeeID 102 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType part-time
+1700121059941:list-employees
+1700121109787:list-departments
+1700121289943:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700121306430:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700121310121:list-employees
+1700121380840:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700121392173:add-employee --employeeID 2 --firstName Jane --lastName Smith --phoneNumber 987654321 --emailAddress jane.smith@example.com --department 1 --employeeType lead
+1700121399456:list-employees
+1700121428525:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700121432084:sort-employees
+1700121433937:sort
+1700121439626:get-sorted
+1700121454592:pick-sorter employees
+1700121459480:get-sorted
+1700121489031:list-employees
+1700121580453:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700121599450:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700121602733:list-employees
+1700130888237:add-department
+1700130906478:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700130910391:list-departed
+1700130914793:list-departments
+1700132445464:add-department
+1700132464904:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1700132473246:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700132480512:list-employees
+1700132496762:list-departments
+1700135032449:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700135041087:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700135052324:add-employee --employeeID 102 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType lead
+1700135063656:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700135074745:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType parttime
+1700135080849:list-employees
+1700135107869:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700135113418:add-employee --employeeID 104 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700135221117:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700135227135:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700135234301:add-employee --employeeID 102 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType lead
+1700135241235:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700135244359:list-employees
+1700135505684:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700135511668:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700135524690:add-employee --employeeID 102 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType lead
+1700135530308:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700135533672:list-employees
+1700150779628:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700150783973:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700150787541:add-employee --employeeID 102 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType lead
+1700150791679:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700150816599:add-employee --employeeID 104 --firstName Bogdan --lastName Stu --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700150820212:list-employees
+1700150838778:add-department --departmentID 2 --maxEmployees 15 --specialization HR
+1700150842651:list-departments
+1700150855305:pick-sorter
+1700150865930:pick-sorter departments
+1700150872150:get-sorted
+1700150893278:add-department --departmentID 5 --maxEmployees 15 --specialization PLM
+1700150900853:add-department --departmentID 3 --maxEmployees 15 --specialization Iahu
+1700150905286:pick-sorter departments
+1700150909074:get-sorted
+1700150919272:pick-sorter
+1700150923616:pick-sorter employees
+1700150926417:get-sorted
+1700150988804:add-client
+1700151000360:add-client --clientID 2 --firstName Stuparsiu --lastName Bogddan --assignmentName Belire2 --emailAddress stupadriu@gmail --phoneNumber 077535503
+1700151004959:add-client --clientID 1 --firstName Stupariu --lastName Bogdan --assignmentName Belire --emailAddress stupariu@gmail --phoneNumber 0775355032
+1700151008217:list-assingments
+1700151012713:list-assignments
+1700152510156:add-skill
+1700152533934:add-skill --skillName Java --skillID 1 --description Programming Language
+1700152538087:list-skills
+1700152547351:add-skill --skillName Java --skillID 2 --description Programming Language
+1700152549852:list-skills
+1700152557426:add-skill --skillName JMd --skillID 111 --description Programming Language
+1700152559794:list-skills
+1700218027691:add-department --departmentID 5 --maxEmployees 15 --specialization PLM
+1700218035551:add-department --departmentID 3 --maxEmployees 15 --specialization Iahu
+1700218037536:pick-sorter
+1700218044860:pick-sorter department
+1700218060259:pick-sorter departments
+1700218071520:get-sorted
+1700221573405:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700221582972:add-employee --employeeID 101 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType full-time
+1700221590219:add-employee --employeeID 103 --firstName John --lastName Doe --phoneNumber 123456789 --emailAddress john.doe@example.com --department 1 --employeeType part-time
+1700221597394:get-events
+1700221604492:help
+1700221619087:observer-print-events
+1700492310128:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700492315913:list-departments
+1700492693152:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700492794760:list-departments
+1700493121866:kelp
+1700493124469:help
+1700493145119:list-departments
+1700493742134:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700494054243:shell:>
+1700494061682:add-department --departmentID 1 --maxEmployees 15 --specialization IT
+1700494493082:list-departments
