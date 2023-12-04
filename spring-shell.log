@@ -253,3 +253,12 @@
 1700494054243:shell:>
 1700494061682:add-department --departmentID 1 --maxEmployees 15 --specialization IT
 1700494493082:list-departments
+1701690622965:help
+1701690650576:add-client
+1701690691094:add-client --emailAddress=johndoe@email.com --firstName=John --phoneNumber=1234567890 --lastName=Doe --clientID=1234 --assignmentName=ProjectX
+1701690719874:add-client --emailAddress johndoe@email.com --firstName John --phoneNumber 1234567890 --lastName Doe --clientID 1234 --assignmentName ProjectX
+1701690758634:add-client --emailAddress stupariu@email.com --firstName Stupariu --phoneNumber 0775355032 --lastName Bogdan --clientID 1235 --assignmentName MessagingApp
+1701690763826:list-clients
+1701690769143:list-assignments
+1701690807301:list-assignemnts
+1701690811478:list-assignments

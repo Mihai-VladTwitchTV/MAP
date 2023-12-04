@@ -3,14 +3,19 @@ package map.project.MihaiStupyMAPSpring.CLI;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Assignments;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.AssignmentsRepository;
+import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
+import org.hibernate.sql.ast.tree.update.Assignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @ShellComponent
+@Component
 public class AssignmentsDirectoryCLI {
 
     @Autowired
@@ -18,6 +23,16 @@ public class AssignmentsDirectoryCLI {
 
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
+
+    @Autowired
+    public AssignmentsDirectoryCLI(AssignmentsRepository assignmentsRepository) {
+        this.assignmentsRepository = assignmentsRepository;
+    }
+
+    public int countAllAssignments() {
+        List<Assignments> assignments = assignmentsRepository.findAll();
+        return assignments.size();
+    }
 
     @ShellMethod(key = "list-assignments", value = "List all assignments")
     public String listAllAssignments() {
