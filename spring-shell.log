@@ -274,3 +274,19 @@
 1701762257812:add-client
 1701762430182:add-client --projectID 10 --departmentID 1 --startDate 12/5/2023 --endDate 18/5/2023 --emailAddress stupy@gmail.com --firstName Stupariu --lastName Bogdan --clientID 1431 -phoneNumber 0775355032 --status started --projectName ProjectY
 1701762467746:add-client --projectID 10 --departmentID 1 --startDate 12/5/2023 --endDate 18/5/2023 --emailAddress stupy@gmail.com --firstName Stupariu --lastName Bogdan --clientID 1431 --phoneNumber 0775355032 --status started --projectName ProjectY --meetingType important
+1701955053630:help
+1701955079467:update-assignment
+1701955103893:update-assignment --assignmentName GUI --assignmentID 1
+1701955115820:update-assignment --assignmentName GUI --assignmentId 1
+1701955199038:add-assignment
+1701955212068:add-assignment --assignmentId 3 --assignmentName FrontEnd
+1701955402553:add-employee
+1701955423523:add-employee --firstName John --lastName Doe --emailAddress john.doe@example.com --employeeID 123456 --department IT --employeeType FullTime --phoneNumber 123-456-7890
+1701955495089:add-employee --firstName John --lastName Doe --emailAddress john.doe@example.com --employeeID 123456 --department 1 --employeeType FullTime --phoneNumber 1234567890
+1701955544408:add-employee --firstName John --lastName Doe --emailAddress john.doe@example.com --employeeID 123456 --department 1 --employeeType Full-Time --phoneNumber 1234567890
+1701956079612:add-skill
+1701956108008:add-skill --skillName WebCoding --description Java --skillID 1
+1701956123852:update-skill
+1701956177760:update-skill --skillName Java --description Backend WebCoding --skillID 1
+1701956381567:add-assignment
+1701956395334:add-assignment --assignmentId 1 --assignmentName GUI

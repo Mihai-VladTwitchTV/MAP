@@ -33,7 +33,7 @@ public class Assignments {
     @Setter
     @Getter
     @ManyToOne
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "projectid")
     private Project project;
 
 
