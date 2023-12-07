@@ -139,47 +139,14 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private Set<EmployeeSkill> skills;
 
+//    @Setter
+//    @Getter
+//    @OneToMany(mappedBy = "employee")
+//    private Set<Assignments> assignments;
+
     @Setter
     @Getter
-    @OneToMany(mappedBy = "employee")
-    private Set<EmployeeProject> assignments;
+    @ManyToOne
+    @JoinColumn(name = "assignmentid")
+    private Assignments assignments;
 }
-
-//@Entity
-//@DiscriminatorValue("FULL_TIME")
-//class FullTimeEmployee extends Employee {
-//    @Setter
-//    @Getter
-//    @Column(name = "isFullTime")
-//    private boolean isFullTime;
-//
-//    public void setIsFullTime(boolean isFullTime) {
-//        this.isFullTime = isFullTime;
-//    }
-//}
-//
-//@Entity
-//@DiscriminatorValue("PART_TIME")
-//class PartTimeEmployee extends Employee {
-//    @Setter
-//    @Getter
-//    @Column(name = "isPartTime")
-//    private boolean isPartTime;
-//
-//    public void setIsPartTime(boolean isPartTime) {
-//        this.isPartTime = isPartTime;
-//    }
-//}
-//
-//@Entity
-//@DiscriminatorValue("LEADER")
-//class LeaderEmployee extends Employee {
-//    @Setter
-//    @Getter
-//    @Column(name = "isLeader")
-//    private boolean isLeader;
-//
-//    public void setIsLeader(boolean isLeader) {
-//        this.isLeader = isLeader;
-//    }
-//}

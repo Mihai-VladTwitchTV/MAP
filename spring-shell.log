@@ -266,3 +266,11 @@
 1701699353663:list-assignments
 1701699379978:help
 1701699399318:list-assignments
+1701760443392:list-departments
+1701760448694:list-clients
+1701760458184:add-department
+1701760491866:add-department --maxEmployees 15 --departmentID 2 --specialization HR
+1701760496680:list-departments
+1701762257812:add-client
+1701762430182:add-client --projectID 10 --departmentID 1 --startDate 12/5/2023 --endDate 18/5/2023 --emailAddress stupy@gmail.com --firstName Stupariu --lastName Bogdan --clientID 1431 -phoneNumber 0775355032 --status started --projectName ProjectY
+1701762467746:add-client --projectID 10 --departmentID 1 --startDate 12/5/2023 --endDate 18/5/2023 --emailAddress stupy@gmail.com --firstName Stupariu --lastName Bogdan --clientID 1431 --phoneNumber 0775355032 --status started --projectName ProjectY --meetingType important

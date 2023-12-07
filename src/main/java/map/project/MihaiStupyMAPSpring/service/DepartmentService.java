@@ -1,5 +1,6 @@
 package map.project.MihaiStupyMAPSpring.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Department;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
@@ -47,4 +48,5 @@ public class DepartmentService {
     public List<Department> findAllDepartments() {
         return departmentRepository.findAll();
     }
+
 }
