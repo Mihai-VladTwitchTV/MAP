@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name = "Assignments")
@@ -20,7 +22,6 @@ public class Assignments {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Setter
@@ -29,10 +30,18 @@ public class Assignments {
     private String assignmentName;
 
 
+
+    @Setter
+    @Getter
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @JoinColumn(name = "projectid")
+    private Project project;
 
 
-    // Constructors, getters, setters, and other fields as needed.
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "assignments")
+    private Set<Employee> employees;
+
+
 }

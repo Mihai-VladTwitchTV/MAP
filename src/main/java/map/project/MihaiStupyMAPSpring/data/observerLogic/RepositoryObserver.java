@@ -1,11 +1,13 @@
 package map.project.MihaiStupyMAPSpring.data.observerLogic;
 
+import lombok.Getter;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Component
 public class RepositoryObserver {
 
@@ -18,10 +20,6 @@ public class RepositoryObserver {
         String marker = "Repository method called with source: " + source;
 
         observedEvents.add(marker);
-    }
-
-    public List<String> getObservedEvents() {
-        return observedEvents;
     }
 
     public void clearEvents(){

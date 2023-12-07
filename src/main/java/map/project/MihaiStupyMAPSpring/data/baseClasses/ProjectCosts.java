@@ -33,7 +33,7 @@ public class ProjectCosts {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "projectID")
+    @JoinColumn(name = "projectid")
     private Project project;
 
     @Getter

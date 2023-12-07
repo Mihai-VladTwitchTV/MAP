@@ -1,6 +1,7 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 import lombok.Data;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,19 +28,6 @@ public class Client {
     @Column(name = "lastName")
     private String lastName;
 
-    public Client() {
-        this.assignments = new ArrayList<>();
-    }
-
-    public Client(int clientID, String firstName,String lastName, String emailAddress, int phoneNumber) {
-        this.clientID = clientID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-        this.phoneNumber = phoneNumber;
-        this.assignments = new ArrayList<>();
-    }
-
     @Setter
     @Getter
     @Column(name = "emailAddress")
@@ -51,5 +39,18 @@ public class Client {
     private int phoneNumber;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Assignments> assignments = new ArrayList<>();
+    private List<Project> projects;
+
+    public Client() {
+        this.projects = new ArrayList<>();
+    }
+
+    public Client(int clientID, String firstName, String lastName, String emailAddress, int phoneNumber) {
+        this.clientID = clientID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.projects = new ArrayList<>();
+    }
 }

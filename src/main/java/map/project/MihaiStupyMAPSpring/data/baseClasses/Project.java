@@ -18,7 +18,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(int projectID, Client client, Department department, String projectName, Date startDate, Date endDate, String status, String meetingType, Set<EmployeeProject> assignments, Set<ProjectCosts> costs, Set<ProjectMilestones> milestones) {
+    public Project(int projectID, Client client, Department department, String projectName, Date startDate, Date endDate, String status, String meetingType, Set<Assignments> assignments, Set<ProjectCosts> costs, Set<ProjectMilestones> milestones) {
         this.projectID = projectID;
         this.client = client;
         this.department = department;
@@ -75,9 +75,10 @@ public class Project {
     @Column(name = "meetingType")
     private String meetingType;
 
+    @Setter
     @Getter
     @OneToMany(mappedBy = "project")
-    private Set<EmployeeProject> assignments;
+    private Set<Assignments> assignments;
 
     @Getter
     @OneToMany(mappedBy = "project")
@@ -86,5 +87,7 @@ public class Project {
     @Getter
     @OneToMany(mappedBy = "project")
     private Set<ProjectMilestones> milestones;
+
+
 }
 
