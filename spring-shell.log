@@ -290,3 +290,25 @@
 1701956177760:update-skill --skillName Java --description Backend WebCoding --skillID 1
 1701956381567:add-assignment
 1701956395334:add-assignment --assignmentId 1 --assignmentName GUI
+1701956929303:add-project
+1701956995028:add-client
+1701956997846:add-project --clientID=12345 --startDate="2023-01-01 08:00:00" --projectID=67890 --endDate="2023-02-01 17:30:00" --status=active --departmentID=54321 --projectName="Example Project" --meetingType=planning
+1701957021423:add-client --projectID=12345 --status=active --firstName="John" --clientID=67890 --meetingType=client_meeting --emailAddress="john@example.com" --projectName="Client Project" --phoneNumber="123-456-7890" --departmentID=54321 --startDate="2023-01-01 08:00:00" --lastName="Doe" --endDate="2023-02-01 17:30:00"
+1701957065646:add-client --projectID 12345 --status active --firstName "John" --clientID 67890 --meetingType client_meeting --emailAddress "john@example.com" --projectName "Client Project" --phoneNumber "123-456-7890" --departmentID 54321 --startDate "2023-01-01 08:00:00" --lastName "Doe" --endDate "2023-02-01 17:30:00"
+1701957075471:add-client --projectID 12345 --status active --firstName "John" --clientID 67890 --meetingType client_meeting --emailAddress "john@example.com" --projectName "Client Project" --phoneNumber "1234567890" --departmentID 54321 --startDate "2023-01-01 08:00:00" --lastName "Doe" --endDate "2023-02-01 17:30:00"
+1701957225951:add-client
+1701957235532:add-project
+1701957270415:add-client --clientID=12345 --firstName="John" --lastName="Doe" --emailAddress="john.doe@example.com" --phoneNumber="1234567890"
+1701957290016:add-client --clientID 12345 --firstName "John" --lastName "Doe" --emailAddress "john.doe@example.com" --phoneNumber 1234567890
+1701957356432:add-project
+1701957379745:add-project --clientID=12345 --projectID=67890 --status=active --startDate="2023-01-01 08:00:00" --endDate="2023-02-01 17:30:00" --departmentID=54321 --projectName="Client Project" --meetingType=presentation
+1701957404378:add-project --clientID 12345 --projectID 67890 --status active --startDate "2023-01-01 08:00:00" --endDate "2023-02-01 17:30:00" --departmentID 54321 --projectName "Client Project" --meetingType presentation
+1701957411502:add-department
+1701957430378:add-department --specialization IT --maxEmployees 15 --departmentID 1
+1701957435143:add-project --clientID 12345 --projectID 67890 --status active --startDate "2023-01-01 08:00:00" --endDate "2023-02-01 17:30:00" --departmentID 1 --projectName "Client Project" --meetingType presentation
+1701957455564:add-assignment
+1701958007806:add-assigment --assignmentName GUI --assignmentId 1110 --projectid 67890
+1701958019606:add-assignment --assignmentName GUI --assignmentId 1110 --projectid 67890
+1701958071273:add-employee
+1701958322592:add-employee --employeeID=1 --firstName="John" --lastName="Doe" --assignmentID=1 --emailAddress="john.doe@example.com" --employeeType="full-time" --phoneNumber=1234567890 --department=1
+1701958345943:add-employee --employeeID 1 --firstName "John" --lastName "Doe" --assignmentID 3 --emailAddress "john.doe@example.com" --employeeType "full-time" --phoneNumber 1234567890 --department 1

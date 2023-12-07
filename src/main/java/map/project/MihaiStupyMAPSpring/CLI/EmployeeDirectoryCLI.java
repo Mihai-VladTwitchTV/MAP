@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.CLI;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.*;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
+import map.project.MihaiStupyMAPSpring.data.repository.AssignmentsRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.DepartmentRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -26,6 +28,9 @@ public class EmployeeDirectoryCLI {
 
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
+
+    @Autowired
+    private AssignmentsRepository assignmentsRepository;
 
     private String determineEmployeeRole(Employee employee) {
         if (employee.getType() != null) {
@@ -70,10 +75,15 @@ public class EmployeeDirectoryCLI {
             @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber,
             @ShellOption({"-email", "--emailAddress"}) String emailAddress,
             @ShellOption({"-dept", "--department"}) int departmentID,
-            @ShellOption({"-type", "--employeeType"}) String employeeType) {
+            @ShellOption({"-type", "--employeeType"}) String employeeType,
+            @ShellOption({"-assignment", "--assignmentID"}) int assignmentID) {
 
         Department department = departmentRepository.findById(departmentID);
-        if (department != null) {
+        Optional<Assignments> optionalAssignment = assignmentsRepository.findById(assignmentID);
+
+        if (department != null && optionalAssignment.isPresent()) {
+            Assignments assignment = optionalAssignment.get();
+
             Employee employee;
 
             switch (employeeType.toLowerCase()) {
@@ -98,12 +108,16 @@ public class EmployeeDirectoryCLI {
                     return "Unknown employee type.";
             }
 
+            // Associate the Employee with the Assignments
+            employee.setAssignments(assignment);
+
             employeeRepository.save(employee);
             return "Employee added successfully.";
         } else {
-            return "Department not found.";
+            return "Department or Assignment not found.";
         }
     }
+
 
 
 

@@ -46,34 +46,28 @@ public class ClientDirectoryCLI {
             @ShellOption({"-first", "--firstName"}) String firstName,
             @ShellOption({"-last", "--lastName"}) String lastName,
             @ShellOption({"-email", "--emailAddress"}) String emailAddress,
-            @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber,
-            @ShellOption({"-project", "--projectName"}) String projectName,
-            @ShellOption({"-projectId", "--projectID"}) int projectID,
-            @ShellOption({"-status", "--status"}) String status,
-            @ShellOption({"-startDate", "--startDate"}) String startDateStr,
-            @ShellOption({"-endDate", "--endDate"}) String endDateStr,
-            @ShellOption({"-department", "--departmentID"}) int departmentID,
-            @ShellOption({"-meetingType", "--meetingType"}) String meetingType) {
+            @ShellOption({"-phone", "--phoneNumber"}) int phoneNumber) {
 
         Client client = new Client(clientID, firstName, lastName, emailAddress, phoneNumber);
 
-        // Parse date strings into Date objects
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = dateFormat.parse(startDateStr);
-            endDate = dateFormat.parse(endDateStr);
-        } catch (ParseException e) {
-            // Handle the exception according to your needs
-            e.printStackTrace();
-        }
+//        // Parse date strings into Date objects
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date startDate = null;
+//        Date endDate = null;
+//        try {
+//            startDate = dateFormat.parse(startDateStr);
+//            endDate = dateFormat.parse(endDateStr);
+//        } catch (ParseException e) {
+//            // Handle the exception according to your needs
+//            e.printStackTrace();
+//        }
 
         eventPublisher.publishRepositoryMethodEvent(this);
-        clientService.saveWithProject(
-                projectName, client, projectID, status, startDate, endDate, departmentID, meetingType);
+        clientService.saveClient(client);
+//        clientService.saveWithProject(
+//                projectName, client, projectID, status, startDate, endDate, departmentID, meetingType);
 
-        return "Client added successfully with assignment: " + projectName + ".";
+        return "Client added successfully ";
     }
 
 

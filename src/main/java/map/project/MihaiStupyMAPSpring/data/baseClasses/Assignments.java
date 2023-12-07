@@ -22,13 +22,14 @@ public class Assignments {
     @Setter
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Setter
     @Getter
     @Column(name = "assignmentName", nullable = false)
     private String assignmentName;
+
+
 
     @Setter
     @Getter
