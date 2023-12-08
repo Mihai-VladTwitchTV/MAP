@@ -32,6 +32,11 @@ public class ProjectDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Project CLI";
+    }
+
     @ShellMethod(key = "list-projects", value = "List all projects")
     public String listAllProjects() {
         eventPublisher.publishRepositoryMethodEvent(this);

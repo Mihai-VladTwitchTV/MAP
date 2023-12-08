@@ -30,6 +30,11 @@ public class EmployeeSkillMTMDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Employee-Skill CLI";
+    }
+
     @ShellMethod(key = "list-employee-skills", value = "List all employee-skill relationships")
     public String listAllEmployeeSkillRelationships() {
         eventPublisher.publishRepositoryMethodEvent(this);

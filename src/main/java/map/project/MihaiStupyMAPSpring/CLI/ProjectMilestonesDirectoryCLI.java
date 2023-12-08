@@ -24,6 +24,11 @@ public class ProjectMilestonesDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Project Milestone CLI";
+    }
+
     @ShellMethod(key = "list-project-milestones", value = "List all project milestones")
     public String listAllProjectMilestones() {
         eventPublisher.publishRepositoryMethodEvent(this);

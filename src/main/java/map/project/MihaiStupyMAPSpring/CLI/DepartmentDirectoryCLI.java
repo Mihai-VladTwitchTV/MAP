@@ -23,6 +23,11 @@ public class DepartmentDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Department CLI";
+    }
+
     public DepartmentDirectoryCLI(DepartmentRepository departmentRepository) {
     }
 

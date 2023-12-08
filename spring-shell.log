@@ -312,3 +312,10 @@
 1701958071273:add-employee
 1701958322592:add-employee --employeeID=1 --firstName="John" --lastName="Doe" --assignmentID=1 --emailAddress="john.doe@example.com" --employeeType="full-time" --phoneNumber=1234567890 --department=1
 1701958345943:add-employee --employeeID 1 --firstName "John" --lastName "Doe" --assignmentID 3 --emailAddress "john.doe@example.com" --employeeType "full-time" --phoneNumber 1234567890 --department 1
+1702063018614:list-departments
+1702063029200:list-assignments
+1702064961549:list-departments
+1702064966254:list-employees
+1702064971483:list-assignments
+1702064976931:list-projects
+1702064985883:observer-print-events

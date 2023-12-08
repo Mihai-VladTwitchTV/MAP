@@ -23,6 +23,11 @@ public class MeetingsDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Meeting CLI";
+    }
+
     @ShellMethod(key = "list-meetings", value = "List all meetings")
     public String listAllMeetings() {
         eventPublisher.publishRepositoryMethodEvent(this);

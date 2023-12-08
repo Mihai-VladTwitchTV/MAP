@@ -30,6 +30,11 @@ public class AssignmentsDirectoryCLI {
 //    @Autowired
 //    private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Assigment CLI";
+    }
+
     @Autowired
     public AssignmentsDirectoryCLI(AssignmentsRepository assignmentsRepository) {
         this.assignmentsRepository = assignmentsRepository;

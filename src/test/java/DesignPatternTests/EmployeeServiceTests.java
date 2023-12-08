@@ -44,7 +44,7 @@ public class EmployeeServiceTests {
 
     @BeforeEach
     public void init(){
-        doNothing().when(repositoryMethodEventPublisher).publishRepositoryMethodEvent(any());
+        lenient().doNothing().when(repositoryMethodEventPublisher).publishRepositoryMethodEvent(any());
     }
 
     @Test

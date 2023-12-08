@@ -28,6 +28,11 @@ public class ProjectCostsDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Project Cost CLI";
+    }
+
     @ShellMethod(key = "list-project-costs", value = "List project costs")
     public String listProjectCosts() {
         eventPublisher.publishRepositoryMethodEvent(this);

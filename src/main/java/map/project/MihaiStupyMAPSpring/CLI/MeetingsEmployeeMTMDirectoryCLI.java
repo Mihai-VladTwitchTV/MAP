@@ -30,6 +30,11 @@ public class MeetingsEmployeeMTMDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Meeting-Employee CLI";
+    }
+
     @ShellMethod(key = "list-meeting-attendees", value = "List meeting attendees")
     public String listMeetingAttendees(@ShellOption(value = "meetingID", help = "Meeting ID") int meetingID) {
         eventPublisher.publishRepositoryMethodEvent(this);

@@ -32,6 +32,11 @@ public class EmployeeDirectoryCLI {
     @Autowired
     private AssignmentsRepository assignmentsRepository;
 
+    @Override
+    public String toString() {
+        return "Employee CLI";
+    }
+
     private String determineEmployeeRole(Employee employee) {
         if (employee.getType() != null) {
             switch (employee.getType().toLowerCase()) {

@@ -31,6 +31,11 @@ public class ClientDirectoryCLI {
     @Autowired
     private AssignmentsRepository assignmentsRepository;
 
+    @Override
+    public String toString() {
+        return "Client CLI";
+    }
+
     @ShellMethod(key = "list-clients", value = "List all clients")
     public String listAllClients() {
         StringBuilder result = new StringBuilder("List of Clients:\n");

@@ -11,7 +11,12 @@ import java.util.List;
 @Component
 public class RepositoryObserver {
 
-    private List<String> observedEvents = new ArrayList<>();
+    private List<String> observedEvents;
+
+
+    public RepositoryObserver() {
+        this.observedEvents = new ArrayList<>();
+    }
 
     @EventListener
     public void handleRepositoryMethodEvent(RepositoryMethodEvent event) {

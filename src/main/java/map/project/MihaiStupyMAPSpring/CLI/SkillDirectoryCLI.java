@@ -19,6 +19,11 @@ public class SkillDirectoryCLI {
     @Autowired
     private RepositoryMethodEventPublisher eventPublisher;
 
+    @Override
+    public String toString() {
+        return "Skill CLI";
+    }
+
     @ShellMethod(key = "list-skills", value = "List all skills")
     public String listAllSkills() {
         eventPublisher.publishRepositoryMethodEvent(this);

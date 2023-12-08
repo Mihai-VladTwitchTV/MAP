@@ -2,7 +2,9 @@ package PermanentStorageTests;
 
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
 import map.project.MihaiStupyMAPSpring.data.repository.ClientRepository;
+import map.project.MihaiStupyMAPSpring.data.repository.ProjectRepository;
 import map.project.MihaiStupyMAPSpring.service.ClientService;
+import map.project.MihaiStupyMAPSpring.service.DepartmentService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -24,13 +26,20 @@ public class ClientServiceTest {
     @Spy
     private ClientRepository clientRepository;
 
+    @Mock
+    private DepartmentService departmentService;
+
+    @Spy
+    private ProjectRepository projectRepository;
+
     @InjectMocks
     private ClientService clientService;
+
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        clientService = new ClientService(clientRepository);
+        clientService = new ClientService(clientRepository,departmentService,projectRepository);
     }
 
     @Test
