@@ -319,3 +319,77 @@
 1702064971483:list-assignments
 1702064976931:list-projects
 1702064985883:observer-print-events
+1702139829336:add-skill
+1702139867337:add-skill --skillID 401 --skillName 'chef' --description 'can cook well'
+1702139893781:update-skill
+1702139946369:update-skill --description 'can bake well' --skillID 401 --skillName 'chef'
+1702139954486:delete-skill 401
+1702139958441:list-skills
+1702139969270:add-skill --skillID 401 --skillName 'chef' --description 'can cook well'
+1702139973889:list-skills
+1702139983626:update-skill --description 'can bake well' --skillID 401 --skillName 'chef'
+1702139990192:list-skills
+1702140015530:update-skill --description 'can bake well' --skillID 401 --skillName 'baker'
+1702140020358:list-skills
+1702149592780:help
+1702149608169:list-tvs
+1702149621987:stacktrace
+1702149878193:help
+1702149881244:list-tvs
+1702150082511:add-tv
+1702150101553:add-tv --tvID 101 --brandName "LG"
+1702150119082:add-tv --tvId 101 --brandName "LG"
+1702150122498:list-tvs
+1702150151594:list-computer-monitors
+1702150247851:add-computer-monitor
+1702150283125:add-computer-monitor --monitorId 103 --brandName "Dell"
+1702150288923:list-computer-monitors
+1702150302085:list-computers
+1702150309245:add-computer
+1702150332531:add-computer --computerId 105 --brandName "ASUS"
+1702150336324:list-computers
+1702150347384:help
+1702150383807:connect-monitor
+1702150436153:connect-monitor --computerID 105 --connectedID 103
+1702150451912:connect-monitor --computerID 105 --connectedID 103 --type "monitor"
+1702150548064:connect-monitor
+1702150570451:connect-monitor --computerID 105 --connectedID 103 --type "monitor"
+1702150662004:help
+1702150699015:connect-monitor --computerID 103 --connectedID 101 --type "tv"
+1702150711370:connect-monitor --computerID 105 --connectedID 101 --type "tv"
+1702150762497:list-tvs
+1702150769223:list-adapters
+1702150772882:connect-monitor --computerID 105 --connectedID 101 --type "tv"
+1702151102750:connect-monitor --computerID 105 --connectedID 101 --type "tvv"
+1702151198186:add-tv
+1702151219288:add-tv --brandName "samsung" --tvId 102
+1702151222230:list-tvs
+1702151232155:add-adapter
+1702151655657:list-adapters
+1702151681566:connect-monitor --connectedID 101 --computerID 105 -0type "tv"
+1702151692221:connect-monitor --connectedID 101 --computerID 105 --type "tv"
+1702151702054:add-adapter
+1702151748697:add-adapter --tvId 102 --adapterId 201
+1702151756977:list adapters
+1702151760800:list-adapters
+1702151786479:connect-monitor --connectedID 101 --computerID 105 --type "tv"
+1702151821172:elete-adapter
+1702151827270:delete-adapter
+1702151833854:delete-adapter 201
+1702151932174:list-adapters
+1702151937085:list-computers
+1702151964334:connect-monitor --computerID 105 --connectedID 101 --type "tv"
+1702152095606:connect-monitor --computerID 105 --connectedID 102 --type "tv"
+1702152104553:list-adapters
+1702152108204:add-adapter
+1702152125470:add-adapter --adapterId 201 --tvId 102
+1702152133424:connect-monitor --computerID 105 --connectedID 102 --type "tv"
+1702152384005:list-adapters
+1702152388803:list-tvs
+1702152420406:connect-monitor --computerID 105 --connectedID 101 --type "tv"
+1702152480773:connect-monitor --computerID 105 --connectedID 103 --type "monitor"
+1702152512673:connect-monitor --computerID 105 --connectedID 100 --type "tv"
+1702152532921:connect-monitor --computerID 105 --connectedID 100 --type "monitor"
+1702152543810:connect-monitor --computerID 105 --connectedID 103 --type "monitor"
+1702152552289:connect-monitor --computerID 102 --connectedID 100 --type "tv"
+1702152564931:connect-monitor --computerID 105 --connectedID 102 --type "tv"
