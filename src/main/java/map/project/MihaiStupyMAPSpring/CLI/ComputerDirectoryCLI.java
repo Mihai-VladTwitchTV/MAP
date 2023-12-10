@@ -3,7 +3,6 @@ package map.project.MihaiStupyMAPSpring.CLI;
 import map.project.MihaiStupyMAPSpring.data.adapterLogic.TVToMonitorAdapter;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Computer;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.ComputerMonitor;
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Monitor;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.TV;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ComputerMonitorRepository;
@@ -94,7 +93,7 @@ public class ComputerDirectoryCLI {
     }
 
     @ShellMethod(key = "connect-monitor",value = "Connect to a monitor or adapter")
-    public void connectMonitor(@ShellOption({"--computerID"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectedID"}) String connectedID){
+    public void connectMonitor(@ShellOption({"--computerId"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectedId"}) String connectedID){
         Optional<Computer> computer = computerRepository.findById(computerID);
         if(computer.isEmpty()){
             System.out.println("No computer with inputted ID");
@@ -133,6 +132,11 @@ public class ComputerDirectoryCLI {
             default:
                 System.out.println("Invalid option, please use 'monitor' or 'tv' ");
         }
+
+    }
+
+    @ShellMethod(key = "set-computer-connector",value = "Set the type of Connector a computer has")
+    public void setConnector(@ShellOption({"--computerId"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectorId"}) String connectedID,@ShellOption({"--connectorLatency"}) String latency){
 
     }
 
