@@ -4,6 +4,8 @@ import map.project.MihaiStupyMAPSpring.data.adapterLogic.TVToMonitorAdapter;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Computer;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.ComputerMonitor;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.TV;
+import map.project.MihaiStupyMAPSpring.data.decoratorLogic.DecoratorRepository;
+import map.project.MihaiStupyMAPSpring.data.decoratorLogic.ExtendedComputerDecorator;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
 import map.project.MihaiStupyMAPSpring.data.repository.ComputerMonitorRepository;
 import map.project.MihaiStupyMAPSpring.data.repository.ComputerRepository;
@@ -19,6 +21,9 @@ import java.util.Optional;
 
 @ShellComponent
 public class ComputerDirectoryCLI {
+
+    @Autowired
+    private DecoratorRepository decoratorRepository;
 
     @Autowired
     private ComputerRepository computerRepository;
@@ -99,6 +104,19 @@ public class ComputerDirectoryCLI {
             System.out.println("No computer with inputted ID");
             return;
         }
+        ExtendedComputerDecorator decor = null;
+        List<ExtendedComputerDecorator> decs = decoratorRepository.findAll();
+        for(ExtendedComputerDecorator dec : decs){
+            if(dec.getComputer().getId() == computerID)
+                decor = dec;
+        }
+        String extraInfo = "";
+        if(decor!=null){
+            extraInfo = extraInfo+" with connector of ID "+decor.getId()+", type "+decor.getConnectorType()+" and latency "+decor.getLatency();
+        }
+        else
+            extraInfo = " with unknown connector ";
+
 
         switch (type) {
             case "monitor":
@@ -107,7 +125,7 @@ public class ComputerDirectoryCLI {
                     System.out.println("No monitor with inputted ID");
                     return;
                 }
-                System.out.println(computer.get().connect(monitor.get()));
+                System.out.println(computer.get().connect(monitor.get())+extraInfo);
                 break;
             case "tv":
                 Optional<TV> tv = tvRepository.findById(Integer.valueOf(connectedID));
@@ -123,10 +141,10 @@ public class ComputerDirectoryCLI {
 
                 for (TVToMonitorAdapter adp : adapters) {
                     if (adp.getTv().getId() == Integer.parseInt(connectedID)) {
-                        System.out.println(computer.get().connect(adp));
+                        System.out.println(computer.get().connect(adp)+extraInfo);
                         break;
                     }
-                    System.out.println("No Adapter for the TV with inputted ID");
+                    System.out.println("No Adapter for TV with inputted ID");
                 }
                 break;
             default:
@@ -135,9 +153,6 @@ public class ComputerDirectoryCLI {
 
     }
 
-    @ShellMethod(key = "set-computer-connector",value = "Set the type of Connector a computer has")
-    public void setConnector(@ShellOption({"--computerId"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectorId"}) String connectedID,@ShellOption({"--connectorLatency"}) String latency){
 
-    }
 
 }

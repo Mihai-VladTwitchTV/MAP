@@ -393,3 +393,50 @@
 1702152543810:connect-monitor --computerID 105 --connectedID 103 --type "monitor"
 1702152552289:connect-monitor --computerID 102 --connectedID 100 --type "tv"
 1702152564931:connect-monitor --computerID 105 --connectedID 102 --type "tv"
+1702227956870:help
+1702227981894:list-connectors
+1702228043801:add-connector
+1702228072055:help connect
+1702228087233:list-computers
+1702228090950:list-monitors
+1702228096359:list-computer-monitors
+1702228101614:connect-monitor
+1702228135529:connect-monitor --type "monitor" --connectedId 103 --computerId 106
+1702228147365:connect-monitor --type "monitor" --connectedId 103 --computerId 105
+1702228177975:connect-monitor --type "TV" --connectedId 103 --computerId 102
+1702228194034:connect-monitor --type "tv" --connectedId 102 --computerId 105
+1702228220390:add-computer-connector
+1702228274718:add-computer-connector --computerID 105 --connectorID 301 --connectorType "WiFi" --latency 13
+1702229321923:list-decorators
+1702229328904:list-computer-decorators
+1702229332240:help
+1702229335883:list-connectors
+1702229339949:add-connector
+1702229345037:add-computer-connector
+1702229378673:add-computer-connector --connectorType "WiFi" --computerId 105 --latency 13 --connectorId 301
+1702230396846:list-connectors
+1702230586597:stacktrace
+1702230641652:list-connectors
+1702230652130:stacktrace
+1702230685709:list-connectors
+1702230689235:add-connector
+1702230697378:connect-monitor
+1702230718083:connect-monitor --connectedId 102 --computerId 105 --type 'tv'
+1702230762224:connect-monitor --connectedId 106 --computerId 105 --type 'monitor'
+1702230770211:list-computer-monitors
+1702230782277:connect-monitor --connectedId 103 --computerId 105 --type 'monitor'
+1702230806907:add-computer-connector --connectorType "WiFi" --computerId 105 --latency 13 --connectorId 301
+1702230811440:list-connetors
+1702230817065:list-connectors
+1702230838163:connect-monitor --connectedId 103 --computerId 105 --type 'monitor'
+1702230871076:connect-monitor --connectedId 102 --computerId 105 --type 'tv'
+1702230898665:update-connector
+1702230905094:update-computer-connector
+1702230909150:help
+1702230933052:update-decorated-computer
+1702230982397:update-decorated-computer --connectorType 'bluetooth' --latency 25 --connectorId 301 --decoratedComputerId 301
+1702230986487:list-connectors
+1702230994280:connect-monitor
+1702231007478:connect-monitor --connectedId 103 --computerId 105 --type 'monitor'
+1702231024142:delete-decorated-computer
+1702231041005:delete-connector 301

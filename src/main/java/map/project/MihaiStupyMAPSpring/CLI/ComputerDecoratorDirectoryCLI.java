@@ -5,6 +5,7 @@ import map.project.MihaiStupyMAPSpring.data.decoratorLogic.ExtendedComputerDecor
 import map.project.MihaiStupyMAPSpring.data.decoratorLogic.DecoratorRepository;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Computer;
 import map.project.MihaiStupyMAPSpring.data.observerLogic.RepositoryMethodEventPublisher;
+import map.project.MihaiStupyMAPSpring.data.repository.ComputerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -15,6 +16,9 @@ import java.util.Optional;
 
 @ShellComponent
 public class ComputerDecoratorDirectoryCLI {
+
+    @Autowired
+    private ComputerRepository computerRepository;
 
     @Autowired
     private DecoratorRepository decoratorRepository;
@@ -34,7 +38,7 @@ public class ComputerDecoratorDirectoryCLI {
         StringBuilder result = new StringBuilder("List of Decorated Computers:\n");
         decoratedComputers.forEach(decoratedComputer ->
                 result.append(decoratedComputer.getId()).append(": ")
-                        .append("Connector ID: ").append(decoratedComputer.getConnectorId()).append(", ")
+                        .append("Connector ID: ").append(decoratedComputer.getId()).append(", ")
                         .append("Computer ID: ").append(decoratedComputer.getComputer().getId()).append(", ")
                         .append("Connector Type: ").append(decoratedComputer.getConnectorType()).append(", ")
                         .append("Latency: ").append(decoratedComputer.getLatency()).append("\n")
@@ -42,37 +46,41 @@ public class ComputerDecoratorDirectoryCLI {
         return result.toString();
     }
 
-    @ShellMethod(key = "add-computer-connector", value = "Add or update connector to a computer")
+    @ShellMethod(key = "add-connector", value = "Add or update connector to a computer")
     public String decorateComputer(
-            @ShellOption(value = "computerID", help = "Computer ID") int computerID,
+            @ShellOption(value = "connectorId", help = "Connector Id") int connectorID,
+            @ShellOption(value = "computerId", help = "Computer Id") int computerID,
             @ShellOption(value = "connectorType", help = "Connector Type") String connectorType,
             @ShellOption(value = "latency", help = "Latency") int latency) {
 
         eventPublisher.publishRepositoryMethodEvent(this);
-        Optional<Computer> computerOptional = decoratorRepository.findById(computerID).map(ExtendedComputerDecorator::getComputer);
-
-        if (computerOptional.isPresent()) {
-            Computer computer = computerOptional.get();
-
-            Optional<ExtendedComputerDecorator> existingDecorator = decoratorRepository.findById(computerID);
-
-            ExtendedComputerDecorator decoratedComputer = existingDecorator.orElseGet(() -> new ExtendedComputerDecorator());
-
-            decoratedComputer.setComputer(computer);
-            decoratedComputer.setConnector(connectorType, latency);
-
-            decoratorRepository.save(decoratedComputer);
-            eventPublisher.publishRepositoryMethodEvent(this);
-
-            return "Computer decorated successfully.";
-        } else {
-            return "Computer not found.";
+        Optional<Computer> comp = computerRepository.findById(computerID);
+        if(comp.isEmpty())
+            return "No Computer with said Id exists ";
+        List<ExtendedComputerDecorator> decs = decoratorRepository.findAll();
+        for(ExtendedComputerDecorator dec : decs){
+            if(dec.getComputer().getId() == computerID)
+                return "Computer already has a connector with ID "+dec.getId();
         }
+
+        ExtendedComputerDecorator decoratedComputer = new ExtendedComputerDecorator();
+
+        decoratedComputer.setId(connectorID);
+        decoratedComputer.setComputer(comp.get());
+        decoratedComputer.setConnectorType(connectorType);
+        decoratedComputer.setLatency(latency);
+
+        decoratorRepository.save(decoratedComputer);
+
+
+        return "Computer decorated successfully.";
+
+
     }
 
-    @ShellMethod(key = "update-decorated-computer", value = "Update functionality of a decorated computer")
+    @ShellMethod(key = "update-connector", value = "Update functionality of a connector")
     public String updateDecoratedComputer(
-            @ShellOption(value = "decoratedComputerID", help = "Decorated Computer ID") int decoratedComputerID,
+            @ShellOption(value = "connectorId", help = "Connector ID") int decoratedComputerID,
             @ShellOption(value = "connectorType", help = "Connector Type") String connectorType,
             @ShellOption(value = "latency", help = "Latency") int latency) {
 
@@ -81,9 +89,8 @@ public class ComputerDecoratorDirectoryCLI {
 
         if (decoratedComputerOptional.isPresent()) {
             ExtendedComputerDecorator decoratedComputer = decoratedComputerOptional.get();
-            decoratedComputer.setConnector(connectorType, latency);
-
-            eventPublisher.publishRepositoryMethodEvent(this);
+            decoratedComputer.setConnectorType(connectorType);
+            decoratedComputer.setLatency(latency);
             decoratorRepository.save(decoratedComputer);
             return "Decorated Computer updated successfully.";
         } else {
@@ -91,31 +98,29 @@ public class ComputerDecoratorDirectoryCLI {
         }
     }
 
-    @ShellMethod(key = "delete-decorated-computer", value = "Delete decorated functionality of a computer")
-    public String deleteDecoratedComputer(@ShellOption(value = "decoratedComputerID", help = "Decorated Computer ID") int decoratedComputerID) {
+    @ShellMethod(key = "delete-connector", value = "Delete connector functionality of a computer")
+    public String deleteDecoratedComputer(@ShellOption(value = "connectorComputerId", help = "Decorated Computer ID") int decoratedComputerID) {
         eventPublisher.publishRepositoryMethodEvent(this);
         Optional<ExtendedComputerDecorator> decoratedComputerOptional = decoratorRepository.findById(decoratedComputerID);
 
         if (decoratedComputerOptional.isPresent()) {
             eventPublisher.publishRepositoryMethodEvent(this);
             decoratorRepository.delete(decoratedComputerOptional.get());
-            return "Decorated Computer functionality deleted successfully.";
+            return "Connector-Computer functionality deleted successfully.";
         } else {
-            return "Decorated Computer functionality not found.";
+            return "Connector-Computer functionality not found.";
         }
     }
 
-    public ExtendedComputerDecorator getDecoratorForComputer(int computerId){
-        List<ExtendedComputerDecorator> decs = decoratorRepository.findAll();
-        if(decs.isEmpty())
-            return null;
-        for(ExtendedComputerDecorator dec : decs){
-            if(dec.getComputer().getId() == computerId){
-                Computer comp = dec.getComputer();
-                Connector conn = (Connector)dec.getConnector();
-                return new ExtendedComputerDecorator(dec.getId(),);
-
-            }
-        }
-    }
+//    public ExtendedComputerDecorator getDecoratorForComputer(int computerId) {
+//        List<ExtendedComputerDecorator> decs = decoratorRepository.findAll();
+//        if (decs.isEmpty())
+//            return null;
+//        for (ExtendedComputerDecorator dec : decs) {
+//            if (dec.getComputer().getId() == computerId)
+//                return new ExtendedComputerDecorator(dec.getId(), dec.getComputer(),dec.getConnectorType(), dec.getLatency());
+//        }
+//        return null;
+//
+//    }
 }
