@@ -440,3 +440,6 @@
 1702231007478:connect-monitor --connectedId 103 --computerId 105 --type 'monitor'
 1702231024142:delete-decorated-computer
 1702231041005:delete-connector 301
+1702417755405:connect-monitor2
+1702417785091:connect-monitor2 --computerId 105 --type "monitor" --connectedId 103
+1702417815444:connect-monitor2 --computerId 105 --type "tv" --connectedId 102

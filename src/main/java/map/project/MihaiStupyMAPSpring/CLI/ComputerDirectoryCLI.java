@@ -97,12 +97,13 @@ public class ComputerDirectoryCLI {
         }
     }
 
+
+
     @ShellMethod(key = "connect-monitor",value = "Connect to a monitor or adapter")
-    public void connectMonitor(@ShellOption({"--computerId"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectedId"}) String connectedID){
+    public String connectMonitor(@ShellOption({"--computerId"}) int computerID,@ShellOption({"--type"}) String type,@ShellOption({"--connectedId"}) String connectedID){
         Optional<Computer> computer = computerRepository.findById(computerID);
         if(computer.isEmpty()){
-            System.out.println("No computer with inputted ID");
-            return;
+            return "No computer with inputted ID";
         }
         ExtendedComputerDecorator decor = null;
         List<ExtendedComputerDecorator> decs = decoratorRepository.findAll();
@@ -122,36 +123,37 @@ public class ComputerDirectoryCLI {
             case "monitor":
                 Optional<ComputerMonitor> monitor = computerMonitorRepository.findById(Integer.valueOf(connectedID));
                 if (monitor.isEmpty()) {
-                    System.out.println("No monitor with inputted ID");
-                    return;
+                    return "No monitor with inputted ID";
                 }
-                System.out.println(computer.get().connect(monitor.get())+extraInfo);
-                break;
+                return computer.get().connect(monitor.get())+extraInfo;
+
             case "tv":
                 Optional<TV> tv = tvRepository.findById(Integer.valueOf(connectedID));
                 if (tv.isEmpty()) {
-                    System.out.println("No TV with inputted ID");
-                    return;
+                    return "No TV with inputted ID";
                 }
                 List<TVToMonitorAdapter> adapters = monitorAdapterRepository.findAll();
                 if(adapters.isEmpty()){
-                    System.out.println( "No Adapter for TV with inputted ID");
-                    break;
+                    return "No Adapter for TV with inputted ID";
+
                 }
 
                 for (TVToMonitorAdapter adp : adapters) {
                     if (adp.getTv().getId() == Integer.parseInt(connectedID)) {
-                        System.out.println(computer.get().connect(adp)+extraInfo);
-                        break;
+                        return(computer.get().connect(adp)+extraInfo);
+
                     }
-                    System.out.println("No Adapter for TV with inputted ID");
+                    return "No Adapter for TV with inputted ID";
                 }
                 break;
             default:
-                System.out.println("Invalid option, please use 'monitor' or 'tv' ");
+                return "Invalid option, please use 'monitor' or 'tv' ";
         }
+        return null;
 
     }
+
+
 
 
 
