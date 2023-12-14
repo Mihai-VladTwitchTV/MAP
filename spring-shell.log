@@ -443,3 +443,11 @@
 1702417755405:connect-monitor2
 1702417785091:connect-monitor2 --computerId 105 --type "monitor" --connectedId 103
 1702417815444:connect-monitor2 --computerId 105 --type "tv" --connectedId 102
+1702512819148:list-connectors
+1702512948222:add-connector
+1702512954446:list-computers
+1702512996991:add-connector --connectorId 404 --computerId 105 --connectorType "WiFi" --latency 13
+1702513002482:list-connectors
+1702513068686:connect-monitor
+1702513092207:connect-monitor --connectedId 102 --computerId 105 --type 'tv'
+1702513113824:connect-monitor --connectedId 101 --computerId 105 --type 'tv'

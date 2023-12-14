@@ -53,7 +53,8 @@ public class DecoratorTests {
     @Mock
     private DecoratorRepository decoratorRepository;
 
-    @InjectMocks
+    //@InjectMocks
+    @Mock
     private ComputerDirectoryCLI computerCLI;
 
     @Test
@@ -76,8 +77,9 @@ public class DecoratorTests {
         );
 
         // Mock the connectMonitor method
-        when(computerCLI.connectMonitor(1, "monitor", "2"))
-                .thenReturn("Computer with ID 1 and brand Dell connected to Monitor with ID 2 and brand Samsung with unknown connector with connector of ID 5, type HDMI and latency 10");
+        doReturn("Computer with ID 1 and brand Dell connected to Monitor with ID 2 and brand Samsung with unknown connector with connector of ID 5, type HDMI and latency 10")
+                .when(computerCLI)
+                .connectMonitor(1, "monitor", "2");
 
         String result = computerCLI.connectMonitor(1, "monitor", "2");
 

@@ -1,4 +1,4 @@
-package map.project.MihaiStupyMAPSpring.CLI;
+package map.project.MihaiStupyMAPSpring.data.decoratorLogic;
 
 import com.sun.jdi.connect.Connector;
 import map.project.MihaiStupyMAPSpring.data.decoratorLogic.ExtendedComputerDecorator;
@@ -35,10 +35,9 @@ public class ComputerDecoratorDirectoryCLI {
     public String listAllConnectors() {
         eventPublisher.publishRepositoryMethodEvent(this);
         Iterable<ExtendedComputerDecorator> decoratedComputers = decoratorRepository.findAll();
-        StringBuilder result = new StringBuilder("List of Decorated Computers:\n");
+        StringBuilder result = new StringBuilder("List of Connectors:\n");
         decoratedComputers.forEach(decoratedComputer ->
                 result.append(decoratedComputer.getId()).append(": ")
-                        .append("Connector ID: ").append(decoratedComputer.getId()).append(", ")
                         .append("Computer ID: ").append(decoratedComputer.getComputer().getId()).append(", ")
                         .append("Connector Type: ").append(decoratedComputer.getConnectorType()).append(", ")
                         .append("Latency: ").append(decoratedComputer.getLatency()).append("\n")
@@ -73,7 +72,7 @@ public class ComputerDecoratorDirectoryCLI {
         decoratorRepository.save(decoratedComputer);
 
 
-        return "Computer decorated successfully.";
+        return "Computer connector added successfully.";
 
 
     }
