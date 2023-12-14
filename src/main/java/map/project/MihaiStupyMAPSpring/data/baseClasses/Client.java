@@ -1,5 +1,6 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -38,7 +39,8 @@ public class Client {
     @Column(name = "phoneNumber")
     private int phoneNumber;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client")
+    @JsonManagedReference // This annotation handles the forward part of the reference
     private List<Project> projects;
 
     public Client() {

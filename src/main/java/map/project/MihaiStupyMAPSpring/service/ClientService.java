@@ -1,5 +1,6 @@
 package map.project.MihaiStupyMAPSpring.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Assignments;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Client;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService extends BaseService<Client, Integer> {
@@ -35,6 +37,9 @@ public class ClientService extends BaseService<Client, Integer> {
     private ProjectRepository projectRepository;
 
     private DepartmentService departmentService;
+
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Transactional
     public void saveWithProject(
@@ -66,25 +71,25 @@ public class ClientService extends BaseService<Client, Integer> {
         projectRepository.save(project);
 
         // Save the client
-        this.getRepository().save(client);
+        clientRepository.save(client);
     }
 
     public Client findClientById(int clientId) {
-        return this.getRepository().findById(clientId).orElseThrow(RuntimeException::new);
+        return  clientRepository.findById(clientId).orElseThrow(RuntimeException::new);
     }
 
     public Client saveClient(Client client) {
-        return this.getRepository().save(client);
+        return  clientRepository.save(client);
     }
 
     @Transactional
     public void deleteClientById(int clientId) {
-        this.getRepository().deleteById(clientId);
+        clientRepository.deleteById(clientId);
     }
 
     @Transactional
     public Client updateClient(int clientId, Client updatedClient) {
-        Client existingClient = this.getRepository().findById(clientId).orElseThrow(RuntimeException::new);
+        Client existingClient =  clientRepository.findById(clientId).orElseThrow(RuntimeException::new);
 
         if (existingClient != null) {
             // Update the existing client with the new values
@@ -94,7 +99,7 @@ public class ClientService extends BaseService<Client, Integer> {
             existingClient.setPhoneNumber(updatedClient.getPhoneNumber());
 
             // Save the updated client
-            return this.getRepository().save(existingClient);
+            return  clientRepository.save(existingClient);
         }
 
         // Handle the case where the client with the given ID is not found
@@ -102,6 +107,28 @@ public class ClientService extends BaseService<Client, Integer> {
     }
     
     public List<Client> findAllClients() {
-        return this.getRepository().findAll();
+        return  clientRepository.findAll();
+    }
+    public Client findByFirstName(String firstName) {
+        return clientRepository.findAll()
+                .stream()
+                .filter(client -> client.getFirstName().equals(firstName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Client> findByLastName(String lastName) {
+        return  clientRepository.findAll()
+                .stream()
+                .filter(client -> client.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+    }
+
+    public List<Client> findByNameContaining(String name) {
+        return  clientRepository.findByFirstNameContainingOrLastNameContaining(name, name);
+    }
+
+    protected ClientRepository getRepository() {
+        return clientRepository;
     }
 }

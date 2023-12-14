@@ -49,4 +49,7 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
+    public Department save(Department department) {
+        return departmentRepository.save(department);
+    }
 }
