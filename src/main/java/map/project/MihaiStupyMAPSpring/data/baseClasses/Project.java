@@ -1,6 +1,7 @@
 package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -40,7 +41,8 @@ public class Project {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "clientID")
+    @JoinColumn(name = "clientid") // adjust the column name as necessary
+    @JsonBackReference // This annotation handles the back part of the reference
     private Client client;
 
     @Getter
@@ -51,7 +53,7 @@ public class Project {
 
     @Getter
     @Setter
-    @Column(name = "project_name", insertable = false, updatable = false)
+    @Column(name = "project_name")
     private String projectName;
 
 
@@ -77,15 +79,15 @@ public class Project {
 
     @Setter
     @Getter
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Assignments> assignments;
 
     @Getter
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectCosts> costs;
 
     @Getter
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectMilestones> milestones;
 
 

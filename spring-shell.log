@@ -443,6 +443,8 @@
 1702417755405:connect-monitor2
 1702417785091:connect-monitor2 --computerId 105 --type "monitor" --connectedId 103
 1702417815444:connect-monitor2 --computerId 105 --type "tv" --connectedId 102
+1702462896594:list-departments
+1702462902928:list-employees
 1702512819148:list-connectors
 1702512948222:add-connector
 1702512954446:list-computers
@@ -451,3 +453,20 @@
 1702513068686:connect-monitor
 1702513092207:connect-monitor --connectedId 102 --computerId 105 --type 'tv'
 1702513113824:connect-monitor --connectedId 101 --computerId 105 --type 'tv'
+1702548995833:list-projects
+1702549016570:update-project
+1702549039942:add-client
+1702549082525:add-client --firstName Joey --lastName Stupariu --phoneNumber 0775355032 --clientID 12334 --emailAddress joey@gmail.com
+1702549097229:add-project
+1702549218497:add-project --departmentID 2 --status InProgress -meetingType important --projectName FindingPeople --startDate 2023-03-01 17:30:00.000000 --endDate 2023-05-01 17:30:00.000000 --clientID 12334 --projectID 6969
+1702549237685:add-project --departmentID 2 --status InProgress --meetingType important --projectName FindingPeople --startDate 2023-03-01 17:30:00.000000 --endDate 2023-05-01 17:30:00.000000 --clientID 12334 --projectID 6969
+1702549341597:add-project --departmentID 2 --status InProgress -meetingType important --projectName FindingPeople --startDate 2023-03-01 17:30:00 --endDate 2023-05-01 17:30:00 --clientID 12334 --projectID 6968
+1702549360859:add-project --departmentID 2 --status InProgress --meetingType important --projectName FindingPeople --startDate 2023-03-01 17:30:00 --endDate 2023-05-01 17:30:00 --clientID 12334 --projectID 6968
+1702552297018:help
+1702552307927:list-project-costs
+1702552317106:list-projects
+1702552644374:help
+1702552656470:list-meetings
+1702552659400:list-assignments
+1702552672605:list-project-milestones
+1702552700615:list-project-costs
