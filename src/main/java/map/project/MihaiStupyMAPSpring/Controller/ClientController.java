@@ -15,30 +15,37 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping()
-    public List<Client> listUsers() {
+    public List<Client> listClients() {
         return clientService.findAll();
     }
 
     @PostMapping()
-    public Client addUser(@RequestBody ClientDTO request) {
+    public Client addClient(@RequestBody ClientDTO request) {
         Client client = new Client();
-        client.setFirstName(request.getName());
-        // Set other properties of Client as necessary
+        client.setClientID(request.getClientID());
+        client.setFirstName(request.getFirstName());
+        client.setLastName(request.getLastName());
+        client.setEmailAddress(request.getEmailAddress());
+        client.setPhoneNumber(request.getPhoneNumber());
+
+        // You can add any other necessary properties here
+
         return clientService.save(client);
     }
 
+
     @GetMapping("/{name}")
-    public Client findUser(@PathVariable String name) {
+    public Client findClient(@PathVariable String name) {
         return (Client) clientService.findByFirstName(name);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSkill(@PathVariable int id) {
+    public void deleteClient(@PathVariable int id) {
         clientService.deleteClientById(id);
     }
 
     @GetMapping("/like/{name}")
-    public List<Client> findUserLike(@PathVariable String name) {
+    public List<Client> findClientLike(@PathVariable String name) {
         return clientService.findByNameContaining(name);
     }
 

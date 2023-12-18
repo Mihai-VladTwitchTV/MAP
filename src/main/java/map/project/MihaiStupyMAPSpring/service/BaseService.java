@@ -3,6 +3,7 @@ package map.project.MihaiStupyMAPSpring.service;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public abstract class BaseService<T, ID> {
     private final JpaRepository<T, ID> repository;
@@ -19,8 +20,8 @@ public abstract class BaseService<T, ID> {
         return repository.save(entity);
     }
 
-    public T findById(ID id) {
-        return repository.findById(id).orElse(null);
+    public T findById(Integer id) {
+        return repository.findById((ID) id).orElse(null);
     }
 
     public List<T> findAll() {

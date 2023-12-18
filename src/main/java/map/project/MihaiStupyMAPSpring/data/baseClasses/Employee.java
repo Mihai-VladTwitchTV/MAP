@@ -13,7 +13,16 @@ import java.util.Set;
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "Employee")
 public class Employee {
+    private Boolean isLeader;
+
     public Employee() {
+    }
+    public void setLeader(Boolean isLeader) {
+        this.isLeader = isLeader;
+    }
+
+    public Boolean isLeader() {
+        return this.isLeader;
     }
 
     public static class EmployeeBuilder {
