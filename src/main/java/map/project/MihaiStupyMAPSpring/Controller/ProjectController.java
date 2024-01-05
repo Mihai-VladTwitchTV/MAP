@@ -1,6 +1,6 @@
 package map.project.MihaiStupyMAPSpring.Controller;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Project;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.*;
 import map.project.MihaiStupyMAPSpring.data.dto.ProjectDTO;
 import map.project.MihaiStupyMAPSpring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/projects")
@@ -57,24 +59,48 @@ public class ProjectController {
         Project projectToUpdate = projectService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
-        // Updating the existing project with new values from the request
-        // This assumes you have setters in your Project class
         projectToUpdate.setClient(clientService.findClientById(request.getClientId()));
-        projectToUpdate.setDepartment(departmentService.findDepartmentById(request.getDepartmentId()));
+        Department department = departmentService.findDepartmentById(request.getDepartmentId());
+        if (department == null) {
+            throw new RuntimeException("Department not found for ID: " + request.getDepartmentId());
+        }
+        projectToUpdate.setDepartment(department);
         projectToUpdate.setProjectName(request.getProjectName());
         projectToUpdate.setStartDate(request.getStartDate());
         projectToUpdate.setEndDate(request.getEndDate());
         projectToUpdate.setStatus(request.getStatus());
         projectToUpdate.setMeetingType(request.getMeetingType());
 
-        // Update assignments, costs, milestones as necessary
-        // This part will depend on your implementation of the services and entities
-        // Example:
-        // projectToUpdate.setAssignments(assignmentsService.findAssignmentsByIds(request.getAssignmentIds()));
+        // Update assignments
+        if (request.getAssignmentIds() != null) {
+            // Clear existing assignments and add new ones
+            projectToUpdate.getAssignments().clear();
+            request.getAssignmentIds().forEach(assignmentId -> {
+                Assignments assignment = assignmentsService.findById(assignmentId);
+                if (assignment != null) {
+                    projectToUpdate.addAssignment(assignment);  // addAssignment method should handle bi-directional setting
+                }
+            });
+        }
+
+        // Update costs
+        if (request.getCostIds() != null && !request.getCostIds().isEmpty()) {
+            Set<ProjectCosts> updatedCosts = request.getCostIds().stream()
+                    .map(costsService::findById)
+                    .collect(Collectors.toSet());
+            projectToUpdate.setCosts(updatedCosts);
+        }
+
+        // Update milestones
+        if (request.getMilestoneIds() != null && !request.getMilestoneIds().isEmpty()) {
+            Set<ProjectMilestones> updatedMilestones = request.getMilestoneIds().stream()
+                    .map(milestonesService::findById)
+                    .collect(Collectors.toSet());
+            projectToUpdate.setMilestones(updatedMilestones);
+        }
 
         return projectService.save(projectToUpdate);
     }
-
 
     // Delete a project
     @DeleteMapping("/{id}")

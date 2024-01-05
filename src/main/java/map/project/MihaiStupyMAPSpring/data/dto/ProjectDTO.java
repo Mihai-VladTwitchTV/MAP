@@ -1,11 +1,12 @@
 package map.project.MihaiStupyMAPSpring.data.dto;
 
-import map.project.MihaiStupyMAPSpring.data.baseClasses.Project;
+import map.project.MihaiStupyMAPSpring.data.baseClasses.*;
 import map.project.MihaiStupyMAPSpring.service.*;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProjectDTO {
     private int projectID;
@@ -142,7 +143,8 @@ public class ProjectDTO {
 
         Project project = new Project();
         project.setProjectID(this.projectID);
-        project.setClient(clientService.findById(this.clientId));
+        Client client = clientService.findById(this.clientId);
+        project.setClient(client);
         project.setDepartment(departmentService.findDepartmentById(this.departmentId));
         project.setProjectName(this.projectName);
         project.setStartDate(this.startDate);
@@ -150,10 +152,30 @@ public class ProjectDTO {
         project.setStatus(this.status);
         project.setMeetingType(this.meetingType);
 
-        // Assuming services provide methods to find entities by IDs
-        project.setAssignments(Collections.singleton(assignmentsService.findById(this.assignmentID)));
-        project.setCosts(Collections.singleton(costsService.findById(this.costID)));
-        project.setMilestones(Collections.singleton(milestonesService.findById(this.milestoneID)));
+        // Handle the associations with Assignments, Costs, and Milestones
+        // Note: Assuming the services provide methods to find entities by IDs
+        // Adjust the logic as per your business rules and service methods
+        if (this.assignmentIds != null) {
+            Set<Assignments> assignments = this.assignmentIds.stream()
+                    .map(assignmentsService::findById)
+                    .collect(Collectors.toSet());
+            project.setAssignments(assignments);
+        }
+// Handling Costs
+        if (this.costIds != null) {
+            Set<ProjectCosts> costs = this.costIds.stream()
+                    .map(costsService::findById)
+                    .collect(Collectors.toSet());
+            project.setCosts(costs);
+        }
+
+        // Handling Milestones
+        if (this.milestoneIds != null) {
+            Set<ProjectMilestones> milestones = this.milestoneIds.stream()
+                    .map(milestonesService::findById)
+                    .collect(Collectors.toSet());
+            project.setMilestones(milestones);
+        }
 
         return project;
     }

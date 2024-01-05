@@ -41,5 +41,22 @@ public class SkillController {
         skillService.deleteById(id);
     }
 
+
+    @PutMapping("/{id}")
+    public Skill updateSkill(@PathVariable int id, @RequestBody SkillDTO request) {
+        Skill existingSkill = skillService.findById(id);
+
+        if (existingSkill == null) {
+            throw new RuntimeException("Skill not found with ID: " + id);
+        }
+
+        // Update the skill properties based on the request
+        existingSkill.setSkillName(request.getSkillName());
+        existingSkill.setDescription(request.getDescription());
+
+        // Save the updated skill
+        return skillService.save(existingSkill);
+    }
+
     // Other CRUD operations can be added as necessary
 }

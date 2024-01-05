@@ -3,8 +3,7 @@ package map.project.MihaiStupyMAPSpring.Controller;
 import map.project.MihaiStupyMAPSpring.data.baseClasses.Assignments;
 import map.project.MihaiStupyMAPSpring.data.dto.AssignmentsDTO;
 import map.project.MihaiStupyMAPSpring.data.repository.AssignmentsRepository;
-import map.project.MihaiStupyMAPSpring.service.AssignmentsService;
-import map.project.MihaiStupyMAPSpring.service.ProjectService;
+import map.project.MihaiStupyMAPSpring.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +17,17 @@ public class AssignmentsController {
     @Autowired
     private AssignmentsService assignmentsService;
     @Autowired
-    private AssignmentsRepository assignmentsRepository;
-
-    @Autowired
     private ProjectService projectService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private ProjectCostsService costsService;
+    @Autowired
+    private ProjectMilestonesService milestonesService;
+    @Autowired
+    private AssignmentsRepository assignmentsRepository;
 
     @GetMapping()
     public List<Assignments> listAssignments() {
@@ -35,7 +41,12 @@ public class AssignmentsController {
 
     @PostMapping()
     public Assignments addAssignment(@RequestBody AssignmentsDTO request) {
-        return assignmentsService.save(request.toAssignments(projectService));
+        return assignmentsService.save(request.toAssignments(projectService, departmentService, clientService, costsService, milestonesService, assignmentsService));
+    }
+
+    @PutMapping("/{id}")
+    public Assignments updateAssignment(@PathVariable int id, @RequestBody AssignmentsDTO request) {
+        return assignmentsService.update(id, request.toAssignments(projectService, departmentService, clientService, costsService, milestonesService, assignmentsService));
     }
 
     @DeleteMapping("/{id}")

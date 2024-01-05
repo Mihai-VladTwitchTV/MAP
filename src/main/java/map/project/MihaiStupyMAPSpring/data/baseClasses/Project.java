@@ -2,6 +2,7 @@ package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,10 +11,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+
 @Entity
+@Data
 @Table(name = "Project")
 public class Project {
     public Project() {
@@ -79,16 +82,38 @@ public class Project {
 
     @Setter
     @Getter
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)//fetch = FetchType.EAGER) //orphanRemoval = true)
     private Set<Assignments> assignments;
 
     @Getter
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)//fetch = FetchType.EAGER) //orphanRemoval = true)
     private Set<ProjectCosts> costs;
 
     @Getter
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)//fetch = FetchType.EAGER) //orphanRemoval = true)
     private Set<ProjectMilestones> milestones;
+
+    public void addAssignment(Assignments assignment) {
+        // Set the project reference in the assignment
+        assignment.setProject(this);
+
+        // Add the assignment to the project's collection
+        this.assignments.add(assignment);
+    }
+
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(projectID);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        Project other = (Project) obj;
+//        return projectID == other.projectID;
+//    }
 
 
 }

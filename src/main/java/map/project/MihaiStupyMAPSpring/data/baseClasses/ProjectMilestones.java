@@ -4,10 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.util.Objects;
 
 
-@Data
+
+
 @Entity
+@Data
 @Table(name = "ProjectMilestones")
 public class ProjectMilestones {
     public ProjectMilestones() {
@@ -40,4 +45,18 @@ public class ProjectMilestones {
     @Setter
     @Column(name = "description")
     private String description;
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(milestoneID);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        ProjectMilestones other = (ProjectMilestones) obj;
+//        return milestoneID == other.milestoneID;
+//    }
+
 }
