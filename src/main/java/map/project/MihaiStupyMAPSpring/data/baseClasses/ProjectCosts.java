@@ -2,15 +2,15 @@ package map.project.MihaiStupyMAPSpring.data.baseClasses;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
+
 @Entity
+@Data
 @Table(name = "ProjectCosts")
 public class ProjectCosts {
     public ProjectCosts() {
@@ -55,4 +55,20 @@ public class ProjectCosts {
     @Setter
     @Column(name = "dueDate")
     private Date dueDate;
+
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(costID);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        ProjectCosts other = (ProjectCosts) obj;
+//        return costID == other.costID;
+//    }
+
+
 }

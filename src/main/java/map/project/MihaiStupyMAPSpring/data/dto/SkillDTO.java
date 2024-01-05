@@ -1,5 +1,7 @@
 package map.project.MihaiStupyMAPSpring.data.dto;
 
+import map.project.MihaiStupyMAPSpring.data.baseClasses.Skill;
+
 public class SkillDTO {
     private String skillName;
     private String description;
@@ -23,4 +25,12 @@ public class SkillDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Skill toSkill() {
+        Skill skill = new Skill();
+        skill.setSkillName(this.skillName);
+        skill.setDescription(this.description);
+        return skill;
+    }
+
 }
