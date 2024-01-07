@@ -26,6 +26,7 @@ public class SkillController {
         Skill skill = new Skill();
         skill.setSkillName(request.getSkillName());
         skill.setDescription(request.getDescription());
+        skill.setSkillID(request.getSkillID());
         return skillService.save(skill);
     }
 

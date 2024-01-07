@@ -4,7 +4,16 @@ import map.project.MihaiStupyMAPSpring.data.baseClasses.Skill;
 
 public class SkillDTO {
     private String skillName;
+    private int skillID;
     private String description;
+
+    public int getSkillID() {
+        return skillID;
+    }
+
+    public void setSkillID(int skillID) {
+        this.skillID = skillID;
+    }
 
     // Getter for skillName
     public String getSkillName() {
@@ -30,6 +39,7 @@ public class SkillDTO {
         Skill skill = new Skill();
         skill.setSkillName(this.skillName);
         skill.setDescription(this.description);
+        skill.setSkillID(this.skillID);
         return skill;
     }
 
