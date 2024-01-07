@@ -33,6 +33,7 @@ public class DepartmentController {
         Department department = new Department();
         department.setMaxEmployees(request.getMaxEmployees());
         department.setSpecialization(request.getSpecialization());
+        department.setDepartmentID(request.getDepartmentID());
         return departmentService.save(department);
     }
 
